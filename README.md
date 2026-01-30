@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CloudJobHunt AI - Infrastructure as Code
 
 ## 🏗️ Architecture
@@ -38,3 +39,7 @@ terraform/
 - Network Security Groups configurés
 - Subnets isolés par fonction
 - Tags pour gestion des coûts
+=======
+# cloudjobhunt-infrastructure
+cloudjobhunt-infrastructure
+>>>>>>> origin/main

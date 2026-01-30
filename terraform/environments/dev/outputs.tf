@@ -28,3 +28,18 @@ output "nsg_id" {
   value       = module.networking.nsg_id
 }
 
+output "acr_id" {
+  description = "ID du Container Registry"
+  value       = module.acr.acr_id
+}
+
+output "aks_id" {
+  description = "ID du cluster AKS"
+  value       = module.aks.aks_id
+}
+
+output "log_analytics_workspace_id" {
+  description = "ID du workspace Log Analytics"
+  value       = module.monitoring.workspace_id
+}
+
