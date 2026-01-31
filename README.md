@@ -33,6 +33,8 @@ terraform/
 └── environments/      # Configurations par environnement
     └── dev/           # Environnement développement
 ```
+![Screenshot](ChatGPT Image 31 janv. 2026, 21_58_01.png)
+
 
 ## 🔐 Sécurité
 
@@ -43,3 +45,5 @@ terraform/
 # cloudjobhunt-infrastructure
 cloudjobhunt-infrastructure
 >>>>>>> origin/main
+>>>>
+>>>>4
