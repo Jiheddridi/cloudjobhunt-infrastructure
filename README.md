@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # CloudJobHunt AI - Infrastructure as Code
 
 ## 🏗️ Architecture
@@ -45,6 +45,3 @@ terraform/
 =======
 # cloudjobhunt-infrastructure
 cloudjobhunt-infrastructure
->>>>>>> origin/main
->>>>
->>>>4
