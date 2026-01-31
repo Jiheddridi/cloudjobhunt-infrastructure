@@ -19,6 +19,7 @@ terraform init
 terraform plan
 terraform apply
 ```
+![ChatGPT Image 31 janv  2026, 21_58_01](https://github.com/user-attachments/assets/3500d5b6-9a6a-4370-bee3-24258df52372)
 
 ### Destruction (si besoin de tout supprimer)
 ```bash
@@ -33,7 +34,7 @@ terraform/
 └── environments/      # Configurations par environnement
     └── dev/           # Environnement développement
 ```
-![Screenshot](ChatGPT Image 31 janv. 2026, 21_58_01.png)
+)
 
 
 ## 🔐 Sécurité
