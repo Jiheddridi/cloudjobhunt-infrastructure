@@ -1,6 +1,6 @@
 
 # 🎯 CloudJobHunt - Enterprise AI Job Search Platform
-                                                       ![ChatGPT Image 31 janv  2026, 21_58_01](https://github.com/user-attachments/assets/e8e4ed81-80b3-46d4-8fdb-afc1d8012599)
+  ![ChatGPT Image 31 janv  2026, 21_58_01](https://github.com/user-attachments/assets/e8e4ed81-80b3-46d4-8fdb-afc1d8012599)
 
 <div align="center">
 
