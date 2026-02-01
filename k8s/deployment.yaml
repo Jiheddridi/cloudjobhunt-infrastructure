@@ -5,7 +5,7 @@ metadata:
   labels:
     app: backend
 spec:
-  replicas: 2  # 2 réplicas pour haute disponibilité
+  replicas: 3  # 3 réplicas pour production
   selector:
     matchLabels:
       app: backend
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: acrcloudhuntdev.azurecr.io/backend:0.1
+        image: acrcloudhuntdev.azurecr.io/cloudjobhunt-backend:v2
         ports:
         - containerPort: 8000
           name: http
@@ -45,32 +45,19 @@ spec:
             memory: "256Mi"
             cpu: "500m"
         
-        # Variables d'environnement
+        # Variables d'environnement (DEV sans secrets)
         env:
         - name: ENVIRONMENT
           value: "dev"
+        - name: DEBUG
+          value: "true"
         - name: DATABASE_HOST
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secrets
-              key: host
+          value: "psql-cloudhunt-dev.postgres.database.azure.com"
         - name: DATABASE_PORT
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secrets
-              key: port
+          value: "5432"
         - name: DATABASE_NAME
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secrets
-              key: name
+          value: "cloudjobhunt"
         - name: DATABASE_USER
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secrets
-              key: user
+          value: "psqladmin@psql-cloudhunt-dev"
         - name: DATABASE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secrets
-              key: password
+          value: "CloudJobHunt2026!"
