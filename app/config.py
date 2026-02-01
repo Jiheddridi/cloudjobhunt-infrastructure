@@ -13,23 +13,32 @@ class Settings(BaseSettings):
     
     # Application
     APP_NAME: str = "CloudJobHunt API"
-    DEBUG: bool = False
+    DEBUG: bool = True  # Enable debug mode
     API_V1_PREFIX: str = "/api/v1"
     
-    # Database
-    DATABASE_URL: str = "postgresql://postgres:postgres@localhost:5432/cloudjobhunt"
+    # Domain
+    APP_URL: str = os.getenv("APP_URL", "https://cloudjobhunt.42web.io")
+    DOMAIN_NAME: str = os.getenv("DOMAIN_NAME", "cloudjobhunt.42web.io")
+    
+    # Database - Use individual variables for Kubernetes
+    DATABASE_HOST: str = os.getenv("DATABASE_HOST", "localhost")
+    DATABASE_PORT: int = int(os.getenv("DATABASE_PORT", "5432"))
+    DATABASE_NAME: str = os.getenv("DATABASE_NAME", "cloudjobhunt")
+    DATABASE_USER: str = os.getenv("DATABASE_USER", "postgres")
+    DATABASE_PASSWORD: str = os.getenv("DATABASE_PASSWORD", "postgres")
+    
+    @property
+    def DATABASE_URL(self) -> str:
+        """Build database URL from individual components"""
+        return f"postgresql://{self.DATABASE_USER}:{self.DATABASE_PASSWORD}@{self.DATABASE_HOST}:{self.DATABASE_PORT}/{self.DATABASE_NAME}"
     
     # JWT
     SECRET_KEY: str = os.getenv("SECRET_KEY", "your-secret-key-change-in-production")
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     
-    # LinkedIn (for scraping)
-    LINKEDIN_EMAIL: str = os.getenv("LINKEDIN_EMAIL", "")
-    LINKEDIN_PASSWORD: str = os.getenv("LINKEDIN_PASSWORD", "")
-    
-    # CORS
-    CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:8000"]
+    # CORS - Allow all origins for debugging
+    CORS_ORIGINS: List[str] = ["*"]
     
     class Config:
         env_file = ".env"

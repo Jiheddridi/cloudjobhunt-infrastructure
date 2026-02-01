@@ -69,3 +69,27 @@ module "database" {
   database_name      = "cloudjobhunt"
   depends_on = [module.networking, module.aks]
 }
+# DNS Zone for custom domain
+resource "azurerm_dns_zone" "main" {
+  name                = var.domain_name
+  resource_group_name = azurerm_resource_group.main.name
+  tags = { Environment = var.environment, Project = var.project_name }
+}
+# DNS A record for API
+resource "azurerm_dns_a_record" "api" {
+  name                = "api"
+  zone_name           = azurerm_dns_zone.main.name
+  resource_group_name = azurerm_resource_group.main.name
+  ttl                 = 3600
+  target_resource_id  = module.aks.ingress_public_ip_id
+}
+output "domain_name" {
+  value = var.domain_name
+}
+output "api_url" {
+  value = "https://api.${var.domain_name}"
+}
+output "database_host" {
+  value = module.database.database_host
+  sensitive = true
+}

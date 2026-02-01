@@ -16,7 +16,6 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     """Schema for creating a user"""
     password: str = Field(..., min_length=8)
-    confirm_password: str
 
 
 class UserUpdate(BaseModel):

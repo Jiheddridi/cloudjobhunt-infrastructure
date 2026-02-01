@@ -65,7 +65,7 @@ async def get_jobs_list(
     )
 
 
-@router.get("/search")
+@router.get("/my-searches")
 async def search_jobs_list(
     q: str = Query(..., min_length=1),
     skip: int = Query(0, ge=0),
@@ -73,7 +73,7 @@ async def search_jobs_list(
     db: Session = Depends(get_db),
     current_user: TokenData = Depends(get_current_active_user),
 ):
-    """Search jobs by query"""
+    """Search jobs by query (authenticated endpoint for saved searches)"""
     jobs = search_jobs(db, query=q, skip=skip, limit=limit)
     return {"jobs": jobs, "count": len(jobs)}
 

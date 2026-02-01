@@ -5,7 +5,7 @@ metadata:
   labels:
     app: backend
 spec:
-  replicas: 3  # 3 réplicas pour production
+  replicas: 3
   selector:
     matchLabels:
       app: backend
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: acrcloudhuntdev.azurecr.io/cloudjobhunt-backend:v3
+        image: acrcloudhuntdev.azurecr.io/cloudjobhunt-backend:v5
         ports:
         - containerPort: 8000
           name: http
@@ -45,7 +45,7 @@ spec:
             memory: "256Mi"
             cpu: "500m"
         
-        # Variables d'environnement (DEV sans secrets)
+        # Environment variables
         env:
         - name: ENVIRONMENT
           value: "dev"
@@ -58,6 +58,22 @@ spec:
         - name: DATABASE_NAME
           value: "cloudjobhunt"
         - name: DATABASE_USER
-          value: "psqladmin@psql-cloudhunt-dev"
+          value: "psqladmin"
         - name: DATABASE_PASSWORD
           value: "CloudJobHunt2026!"
+        - name: APP_URL
+          value: "https://api.cloudjobhunt.tn"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  ports:
+  - port: 80
+    targetPort: 8000
+    protocol: TCP
+    name: http
+  type: ClusterIP

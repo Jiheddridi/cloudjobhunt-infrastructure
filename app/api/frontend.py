@@ -1,9 +1,10 @@
 """
-CloudJobHunt - Frontend HTML Templates
+CloudJobHunt - Frontend HTML Templates avec recherche en temps réel
 """
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
+from app.scraper.aggregator import search_jobs_sync
+import json
 
 router = APIRouter()
 
@@ -19,7 +20,7 @@ HOME_TEMPLATE = """
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
             min-height: 100vh;
             color: #333;
         }
@@ -34,14 +35,19 @@ HOME_TEMPLATE = """
             justify-content: space-between;
             align-items: center;
         }
-        .logo { font-size: 28px; font-weight: bold; color: #667eea; }
+        .logo { 
+            font-size: 32px; 
+            font-weight: bold; 
+            color: #0066cc; 
+            text-decoration: none;
+        }
         nav a {
             margin-left: 30px;
             text-decoration: none;
             color: #333;
             font-weight: 500;
         }
-        nav a:hover { color: #667eea; }
+        nav a:hover { color: #0066cc; }
         .hero {
             text-align: center;
             padding: 80px 20px;
@@ -61,14 +67,14 @@ HOME_TEMPLATE = """
             width: 100%;
             padding: 15px 20px;
             margin: 10px 0;
-            border: 2px solid #eee;
+            border: 2px solid #ddd;
             border-radius: 8px;
             font-size: 16px;
         }
         .search-box button {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
             color: white;
             border: none;
             border-radius: 8px;
@@ -97,55 +103,89 @@ HOME_TEMPLATE = """
             text-align: center;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
-        .feature-card h3 { color: #667eea; margin-bottom: 15px; }
-        .jobs-section { padding: 60px 0; }
+        .feature-card h3 { color: #0066cc; margin-bottom: 15px; }
+        footer {
+            background: #004499;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 18px;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .job-card {
             background: white;
             padding: 25px;
             border-radius: 10px;
             margin: 15px 0;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #0066cc;
         }
-        .job-card h3 { color: #333; margin-bottom: 10px; }
-        .job-card .company { color: #667eea; font-weight: 500; }
-        .job-card .location { color: #666; font-size: 14px; margin: 5px 0; }
-        .job-card .tags { margin-top: 10px; }
-        .tag {
+        .job-card h3 { margin-bottom: 10px; color: #333; }
+        .job-card .company { color: #0066cc; font-weight: 500; }
+        .job-card .location { color: #666; font-size: 14px; margin-bottom: 10px; }
+        .job-card .description { color: #333; margin: 15px 0; }
+        .job-card .tags { margin-bottom: 15px; }
+        .job-card .tag {
             display: inline-block;
-            background: #eee;
+            background: #e0e0e0;
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 12px;
             margin-right: 5px;
+            margin-bottom: 5px;
         }
+        .job-card .source-tag {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: white;
+        }
+        .source-linkedin { background: #0077b5; }
+        .source-indeed { background: #2164f3; }
+        .source-junglejobs { background: #00d09c; }
         .btn-apply {
             display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 10px 25px;
+            padding: 12px 25px;
             border-radius: 5px;
             text-decoration: none;
-            margin-top: 15px;
-        }
-        footer {
-            background: #333;
+            font-weight: bold;
             color: white;
-            text-align: center;
-            padding: 30px;
-            margin-top: 60px;
+            background: #0066cc;
         }
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        .no-results h3 { color: #0066cc; margin-bottom: 10px; }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <div class="logo">🚀 CloudJobHunt</div>
+            <a href="/" class="logo">🚀 CloudJobHunt</a>
             <nav>
                 <a href="#search">Rechercher</a>
                 <a href="#features">Fonctionnalités</a>
-                <a href="/docs">API</a>
-                <a href="/api/v1/login">Connexion</a>
+                <a href="/login">Connexion</a>
             </nav>
         </div>
     </header>
@@ -153,102 +193,63 @@ HOME_TEMPLATE = """
     <section class="hero">
         <div class="container">
             <h1>Trouve ton job idéal en France & Europe</h1>
-            <p>Recherche parmi des milliers d'offres LinkedIn, Indeed et plus encore</p>
+            <p>Recherche parmi des milliers d'offres LinkedIn, Indeed, Welcome to the Jungle et plus encore</p>
         </div>
     </section>
 
     <section id="search">
         <div class="container">
             <div class="search-box">
-                <h2 style="text-align: center; margin-bottom: 20px; color: #333;">🔍 Rechercher un emploi</h2>
-                <form action="/search" method="GET">
-                    <input type="text" name="q" placeholder="Poste, entreprise, ou mot-clé...">
+                <h2 style="text-align: center; margin-bottom: 20px; color: #333;">🔍 Recherche en temps réel</h2>
+                <form id="jobSearchForm">
+                    <input type="text" id="searchQuery" name="q" placeholder="Poste (ex: devops, python, data scientist)..." required>
                     <div class="filters">
-                        <select name="location">
+                        <select id="searchLocation" name="location">
                             <option value="">📍 Toutes localisations</option>
                             <option value="tunisie">🇹🇳 Tunisie</option>
-                            <option value="france">🇫🇷 France</option>
-                            <option value="allemagne">🇩🇪 Allemagne</option>
-                            <option value="belgique">🇧🇪 Belgique</option>
-                            <option value="uk">🇬🇧 Royaume-Uni</option>
+                            <option value="paris, france">🇫🇷 Paris, France</option>
+                            <option value="lyon, france">🇫🇷 Lyon, France</option>
+                            <option value="marseille, france">🇫🇷 Marseille, France</option>
+                            <option value="berlin, allemagne">🇩🇪 Berlin, Allemagne</option>
+                            <option value="bruxelles, belgique">🇧🇪 Bruxelles, Belgique</option>
+                            <option value="london, uk">🇬🇧 Londres, UK</option>
                         </select>
-                        <select name="type">
-                            <option value="">📋 Tous types de contrat</option>
+                        <select id="searchType" name="type">
+                            <option value="">📋 Tous types</option>
                             <option value="cdi">CDI</option>
                             <option value="cdd">CDD</option>
                             <option value="stage">Stage</option>
                             <option value="freelance">Freelance</option>
                         </select>
-                        <select name="experience">
-                            <option value="">💼 Tous niveaux d'expérience</option>
-                            <option value="junior">Junior (0-2 ans)</option>
-                            <option value="intermediate">Intermédiaire (2-5 ans)</option>
-                            <option value="senior">Senior (5+ ans)</option>
-                        </select>
                     </div>
-                    <button type="submit">Rechercher</button>
+                    <button type="submit" id="searchBtn">🚀 Rechercher</button>
                 </form>
+                <div id="loading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Recherche en cours sur LinkedIn, Indeed, Welcome to the Jungle...</p>
+                </div>
             </div>
         </div>
+    </section>
+
+    <section class="container">
+        <div id="results"></div>
     </section>
 
     <section id="features" class="container">
         <div class="features">
             <div class="feature-card">
-                <h3>🤖 Matching Intelligent</h3>
-                <p>Notre IA analyse ton profil et trouve les offres qui correspondent parfaitement à tes compétences.</p>
+                <h3>🔍 Recherche en temps réel</h3>
+                <p>Notre агент сканиne LinkedIn, Indeed et Welcome to the Jungle pour trouver les dernières offres.</p>
             </div>
             <div class="feature-card">
-                <h3>🌍 Multi-plateformes</h3>
-                <p>Recherche sur LinkedIn, Indeed, Welcome to the Jungle et bien d'autres en une seule recherche.</p>
+                <h3>⚡ Récent (moins de 5 jours)</h3>
+                <p>Toutes les offres affichées sont publiées il y a moins de 5 jours.</p>
             </div>
             <div class="feature-card">
-                <h3>🔔 Alertes en temps réel</h3>
-                <p>Reçois des notifications instantanément quand une nouvelle offre correspond à tes critères.</p>
+                <h3>🔗 Lien direct</h3>
+                <p>Chaque offre inclut un lien pour postuler directement sur le site original.</p>
             </div>
-        </div>
-    </section>
-
-    <section class="jobs-section container">
-        <h2 style="text-align: center; margin-bottom: 40px;">💼 Dernières offres</h2>
-        <div class="job-card">
-            <h3>Développeur Python / FastAPI</h3>
-            <p class="company">TechCorp Paris</p>
-            <p class="location">📍 Paris, France (Hybride)</p>
-            <div class="tags">
-                <span class="tag">CDI</span>
-                <span class="tag">Senior</span>
-                <span class="tag">Python</span>
-                <span class="tag">FastAPI</span>
-                <span class="tag">PostgreSQL</span>
-            </div>
-            <a href="#" class="btn-apply">Postuler maintenant</a>
-        </div>
-        <div class="job-card">
-            <h3>DevOps Engineer - Kubernetes</h3>
-            <p class="company">CloudFirst Lyon</p>
-            <p class="location">📍 Lyon, France</p>
-            <div class="tags">
-                <span class="tag">CDI</span>
-                <span class="tag">Intermédiaire</span>
-                <span class="tag">Kubernetes</span>
-                <span class="tag">Docker</span>
-                <span class="tag">Azure</span>
-            </div>
-            <a href="#" class="btn-apply">Postuler maintenant</a>
-        </div>
-        <div class="job-card">
-            <h3>Full Stack Developer JavaScript</h3>
-            <p class="company">StartupHub Berlin</p>
-            <p class="location">📍 Berlin, Allemagne</p>
-            <div class="tags">
-                <span class="tag">CDI</span>
-                <span class="tag">Junior</span>
-                <span class="tag">React</span>
-                <span class="tag">Node.js</span>
-                <span class="tag">TypeScript</span>
-            </div>
-            <a href="#" class="btn-apply">Postuler maintenant</a>
         </div>
     </section>
 
@@ -256,72 +257,97 @@ HOME_TEMPLATE = """
         <p>🚀 CloudJobHunt - Trouve ton job idéal en France et en Europe</p>
         <p style="margin-top: 10px; opacity: 0.7;">Propulsé par Azure Kubernetes & FastAPI</p>
     </footer>
+
+    <script>
+        document.getElementById('jobSearchForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const query = document.getElementById('searchQuery').value;
+            const location = document.getElementById('searchLocation').value;
+            const type = document.getElementById('searchType').value;
+            const searchBtn = document.getElementById('searchBtn');
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            
+            // Afficher le loader
+            searchBtn.style.display = 'none';
+            loading.style.display = 'block';
+            results.innerHTML = '';
+            
+            try {
+                const response = await fetch('/api/v1/search?q=' + encodeURIComponent(query) + 
+                    '&location=' + encodeURIComponent(location) + 
+                    '&job_type=' + encodeURIComponent(type));
+                
+                if (!response.ok) {
+                    throw new Error('Erreur serveur: ' + response.status);
+                }
+                
+                const data = await response.json();
+                
+                if (data.total_found === 0) {
+                    results.innerHTML = `
+                        <div class="no-results">
+                            <h3 style="color: #0066cc;">🔍 Aucune offre trouvée</h3>
+                            <p>Essayez avec d'autres mots-clés ou une autre localisation.</p>
+                        </div>
+                    `;
+                } else {
+                    let jobsHtml = `
+                        <h2 style="text-align: center; margin: 40px 0 20px; color: white;">
+                            💼 ${data.total_found} offres trouvées pour "${data.query}"
+                        </h2>
+                    `;
+                    
+                    data.jobs.forEach(job => {
+                        jobsHtml += `
+                            <div class="job-card">
+                                <h3>${job.title}</h3>
+                                <p class="company">🏢 ${job.company}</p>
+                                <p class="location">📍 ${job.location}</p>
+                                <p class="description">${job.description}</p>
+                                <div class="tags">
+                                    <span class="tag">📅 ${job.days_ago} jour(s)</span>
+                                    <span class="tag">${job.job_type}</span>
+                                    <span class="tag">💰 ${job.salary}</span>
+                                    ${job.skills.map(s => `<span class="tag">${s}</span>`).join('')}
+                                </div>
+                                <a href="${job.url}" target="_blank" class="btn-apply">
+                                    ➡️ Postuler sur ${job.source.charAt(0).toUpperCase() + job.source.slice(1)}
+                                </a>
+                            </div>
+                        `;
+                    });
+                    
+                    results.innerHTML = jobsHtml;
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                results.innerHTML = `
+                    <div class="no-results">
+                        <h3 style="color: red;">❌ Erreur</h3>
+                        <p>Une erreur s'est produite: ${error.message}</p>
+                        <p>Veuillez réessayer dans quelques instants.</p>
+                    </div>
+                `;
+            }
+            
+            // Masquer le loader
+            searchBtn.style.display = 'block';
+            loading.style.display = 'none';
+        });
+    </script>
 </body>
 </html>
 """
 
 @router.get("/", response_class=HTMLResponse)
-async def home():
+async def home(request: Request):
     """Page d'accueil"""
     return HOME_TEMPLATE
 
-@router.get("/search", response_class=HTMLResponse)
-async def search_results(q: str = "", location: str = "", type_: str = "", experience: str = ""):
-    """Page de résultats de recherche"""
-    # Simulation de résultats (à remplacer par vrai scraping)
-    jobs = [
-        {"title": "Développeur Python Senior", "company": "TechCorp", "location": "Paris", "type": "CDI", "tags": ["Python", "FastAPI", "PostgreSQL"]},
-        {"title": "DevOps Engineer", "company": "CloudFirst", "location": "Lyon", "type": "CDI", "tags": ["Kubernetes", "Docker", "Azure"]},
-        {"title": "Full Stack JS", "company": "StartupHub", "location": "Berlin", "type": "CDI", "tags": ["React", "Node.js"]},
-    ]
-    
-    html = f"""
-    <!DOCTYPE html>
-    <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Résultats - CloudJobHunt</title>
-        <style>
-            * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-            body {{ font-family: 'Segoe UI', sans-serif; background: #f5f5f5; }}
-            header {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; color: white; }}
-            .container {{ max-width: 1200px; margin: 0 auto; padding: 20px; }}
-            .job-card {{ background: white; padding: 25px; border-radius: 10px; margin: 15px 0; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }}
-            .tag {{ display: inline-block; background: #667eea; color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; margin: 2px; }}
-            .btn-back {{ display: inline-block; background: white; color: #667eea; padding: 10px 25px; border-radius: 5px; text-decoration: none; margin-bottom: 20px; }}
-        </style>
-    </head>
-    <body>
-        <header>
-            <div class="container">
-                <h1>🔍 Résultats pour "{q or 'Tous les jobs'}"</h1>
-            </div>
-        </header>
-        <div class="container">
-            <a href="/" class="btn-back">← Retour à l'accueil</a>
-            <h2 style="margin-bottom: 20px;">{len(jobs)} offres trouvées</h2>
-    """
-    
-    for job in jobs:
-        tags_html = "".join([f'<span class="tag">{tag}</span>' for tag in job["tags"]])
-        html += f"""
-        <div class="job-card">
-            <h3>{job['title']}</h3>
-            <p><strong>🏢 {job['company']}</strong> | 📍 {job['location']} | 📋 {job['type']}</p>
-            <div style="margin-top: 10px;">{tags_html}</div>
-        </div>
-        """
-    
-    html += """
-        </div>
-    </body>
-    </html>
-    """
-    return html
-
 @router.get("/login", response_class=HTMLResponse)
-async def login_page():
+async def login_page(request: Request):
     """Page de connexion"""
     return """
     <!DOCTYPE html>
@@ -331,34 +357,103 @@ async def login_page():
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Connexion - CloudJobHunt</title>
         <style>
-            body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-            .login-box { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); width: 400px; }
-            h1 { text-align: center; color: #667eea; margin-bottom: 30px; }
-            input { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 8px; font-size: 16px; }
-            button { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; }
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .login-box {
+                background: white;
+                padding: 40px;
+                border-radius: 15px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+                width: 100%;
+                max-width: 400px;
+            }
+            .logo { 
+                font-size: 36px; 
+                font-weight: bold; 
+                color: #0066cc; 
+                text-align: center;
+                display: block;
+                margin-bottom: 30px;
+                text-decoration: none;
+            }
+            h1 { text-align: center; margin-bottom: 30px; color: #333; }
+            input {
+                width: 100%;
+                padding: 15px;
+                margin: 10px 0;
+                border: 2px solid #ddd;
+                border-radius: 8px;
+                font-size: 16px;
+            }
+            button {
+                width: 100%;
+                padding: 15px;
+                background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-size: 18px;
+                font-weight: bold;
+                cursor: pointer;
+                margin-top: 20px;
+            }
+            button:hover { opacity: 0.9; }
             .links { text-align: center; margin-top: 20px; }
-            a { color: #667eea; text-decoration: none; }
+            .links a { color: #0066cc; text-decoration: none; }
         </style>
     </head>
     <body>
         <div class="login-box">
-            <h1>🚀 CloudJobHunt</h1>
-            <form action="/api/v1/login" method="POST">
-                <input type="email" name="username" placeholder="📧 Email" required>
-                <input type="password" name="password" placeholder="🔒 Mot de passe" required>
+            <a href="/" class="logo">🚀 CloudJobHunt</a>
+            <h1>Connexion</h1>
+            <form id="loginForm">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Mot de passe" required>
                 <button type="submit">Se connecter</button>
             </form>
             <div class="links">
-                <p>Pas de compte ? <a href="/register">S'inscrire</a></p>
-                <p><a href="/">← Retour à l'accueil</a></p>
+                <p>Pas de compte? <a href="/register">S'inscrire</a></p>
+                <p style="margin-top: 10px;"><a href="/">← Retour à l'accueil</a></p>
             </div>
         </div>
+        <script>
+            document.getElementById('loginForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                try {
+                    const response = await fetch('/api/v1/auth/login', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({username: email, password: password})
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        localStorage.setItem('token', data.access_token);
+                        window.location.href = '/';
+                    } else {
+                        alert('Erreur de connexion. Vérifiez vos identifiants.');
+                    }
+                } catch (error) {
+                    alert('Erreur: ' + error.message);
+                }
+            });
+        </script>
     </body>
     </html>
     """
 
 @router.get("/register", response_class=HTMLResponse)
-async def register_page():
+async def register_page(request: Request):
     """Page d'inscription"""
     return """
     <!DOCTYPE html>
@@ -368,29 +463,100 @@ async def register_page():
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Inscription - CloudJobHunt</title>
         <style>
-            body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-            .register-box { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); width: 400px; }
-            h1 { text-align: center; color: #667eea; margin-bottom: 30px; }
-            input { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 8px; font-size: 16px; }
-            button { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; }
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .register-box {
+                background: white;
+                padding: 40px;
+                border-radius: 15px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+                width: 100%;
+                max-width: 400px;
+            }
+            .logo { 
+                font-size: 36px; 
+                font-weight: bold; 
+                color: #0066cc; 
+                text-align: center;
+                display: block;
+                margin-bottom: 30px;
+                text-decoration: none;
+            }
+            h1 { text-align: center; margin-bottom: 30px; color: #333; }
+            input {
+                width: 100%;
+                padding: 15px;
+                margin: 10px 0;
+                border: 2px solid #ddd;
+                border-radius: 8px;
+                font-size: 16px;
+            }
+            button {
+                width: 100%;
+                padding: 15px;
+                background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-size: 18px;
+                font-weight: bold;
+                cursor: pointer;
+                margin-top: 20px;
+            }
+            button:hover { opacity: 0.9; }
             .links { text-align: center; margin-top: 20px; }
-            a { color: #667eea; text-decoration: none; }
+            .links a { color: #0066cc; text-decoration: none; }
         </style>
     </head>
     <body>
         <div class="register-box">
-            <h1>🚀 CloudJobHunt</h1>
-            <form action="/api/v1/register" method="POST">
-                <input type="text" name="name" placeholder="👤 Nom complet" required>
-                <input type="email" name="email" placeholder="📧 Email" required>
-                <input type="password" name="password" placeholder="🔒 Mot de passe" required>
-                <button type="submit">Créer mon compte</button>
+            <a href="/" class="logo">🚀 CloudJobHunt</a>
+            <h1>Inscription</h1>
+            <form id="registerForm">
+                <input type="text" id="name" placeholder="Nom complet" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Mot de passe" required>
+                <button type="submit">S'inscrire</button>
             </form>
             <div class="links">
-                <p>Déjà un compte ? <a href="/login">Se connecter</a></p>
-                <p><a href="/">← Retour à l'accueil</a></p>
+                <p>Déjà un compte? <a href="/login">Se connecter</a></p>
+                <p style="margin-top: 10px;"><a href="/">← Retour à l'accueil</a></p>
             </div>
         </div>
+        <script>
+            document.getElementById('registerForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                try {
+                    const response = await fetch('/api/v1/auth/register', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({email: email, password: password, full_name: name})
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        localStorage.setItem('token', data.access_token);
+                        window.location.href = '/';
+                    } else {
+                        const error = await response.json();
+                        alert('Erreur: ' + (error.detail || 'Inscription échouée'));
+                    }
+                } catch (error) {
+                    alert('Erreur: ' + error.message);
+                }
+            });
+        </script>
     </body>
     </html>
     """

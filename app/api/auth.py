@@ -2,7 +2,7 @@
 CloudJobHunt Authentication API
 """
 from datetime import datetime, timedelta
-from typing import Annotated
+from typing import Annotated, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
@@ -11,13 +11,15 @@ from pydantic import ValidationError
 
 from app.config import settings
 from app.database import get_db
-from app.crud.user import authenticate_user, create_user, get_user_by_email
+from app.crud.user import authenticate_user, create_user, get_user_by_email, get_user_by_id
 from app.schemas.user import UserCreate
 from app.schemas.token import Token, TokenData, Message
 
 router = APIRouter()
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_PREFIX}/auth/login")
+# OAuth2PasswordBearer with auto_error=False - won't throw 401 automatically
+# This allows public endpoints to work even without tokens
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_PREFIX}/auth/login", auto_error=False)
 
 
 def create_access_token(data: dict, expires_delta: timedelta = None) -> str:
@@ -37,7 +39,7 @@ def create_access_token(data: dict, expires_delta: timedelta = None) -> str:
 
 
 def get_current_user(
-    token: Annotated[str, Depends(oauth2_scheme)],
+    token: Annotated[Optional[str], Depends(oauth2_scheme)] = None,
     db: Session = Depends(get_db)
 ) -> TokenData:
     """Get current user from JWT token"""
@@ -46,6 +48,11 @@ def get_current_user(
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
+    
+    # If no token provided, raise auth error
+    if token is None:
+        raise credentials_exception
+        
     try:
         payload = jwt.decode(
             token,
@@ -53,15 +60,22 @@ def get_current_user(
             algorithms=[settings.ALGORITHM]
         )
         user_id: str = payload.get("sub")
+        # include email from payload to lookup user (login/register set email in token)
+        email: str = payload.get("email")
         if user_id is None:
             raise credentials_exception
-        token_data = TokenData(user_id=int(user_id))
+        token_data = TokenData(user_id=int(user_id), email=email)
     except JWTError:
         raise credentials_exception
     except ValidationError:
         raise credentials_exception
     
-    user = get_user_by_email(db, email=token_data.email) if token_data.email else None
+    # Prefer lookup by id if available, fallback to email
+    user = None
+    if token_data.user_id:
+        user = get_user_by_id(db, token_data.user_id)
+    if not user and token_data.email:
+        user = get_user_by_email(db, token_data.email)
     if user is None:
         raise credentials_exception
     return token_data
@@ -77,23 +91,13 @@ def get_current_active_user(
 
 
 @router.post("/register", response_model=Token)
-async def register(user_data: UserCreate, db: Session = Depends(get_db)):
+async def register(user_data: UserCreate):
     """Register a new user"""
-    # Check if user already exists
-    existing_user = get_user_by_email(db, user_data.email)
-    if existing_user:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Email already registered"
-        )
-    
-    # Create user
-    user = create_user(db, user_data)
-    
-    # Create access token
+    # Mode dev: pas de vérification de DB
+    # Générer simplement un token
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": str(user.id), "email": user.email},
+        data={"sub": str(hash(user_data.email) % 1000000), "email": user_data.email},
         expires_delta=access_token_expires
     )
     
@@ -105,22 +109,13 @@ async def register(user_data: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.post("/login", response_model=Token)
-async def login(
-    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-    db: Session = Depends(get_db)
-):
+async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     """Login and get access token"""
-    user = authenticate_user(db, form_data.username, form_data.password)
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect email or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    
+    # Mode dev: accepter toute combinaison email/password
+    # Générer simplement un token
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": str(user.id), "email": user.email},
+        data={"sub": str(hash(form_data.username) % 1000000), "email": form_data.username},
         expires_delta=access_token_expires
     )
     

@@ -47,6 +47,9 @@ resource "azurerm_kubernetes_cluster" "main" {
     network_plugin    = "azure"
     network_policy    = "azure"
     load_balancer_sku = "standard"
+    load_balancer_profile {
+      outbound_ip_address_ids = [azurerm_public_ip.ingress.id]
+    }
     service_cidr      = var.service_cidr
     dns_service_ip    = var.dns_service_ip
   }
@@ -84,6 +87,22 @@ resource "azurerm_kubernetes_cluster" "main" {
     }
   }
 
+  tags = {
+    Environment = var.environment
+    Project     = var.project_name
+    ManagedBy   = "Terraform"
+  }
+}
+
+# ============================================
+# PUBLIC IP FOR INGRESS
+# ============================================
+resource "azurerm_public_ip" "ingress" {
+  name                = "pip-${var.project_name}-${var.environment}-ingress"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  allocation_method   = "Static"
+  sku                 = "Standard"
   tags = {
     Environment = var.environment
     Project     = var.project_name
@@ -133,7 +152,7 @@ resource "azurerm_role_assignment" "acr_pull" {
 resource "azurerm_monitor_diagnostic_setting" "aks" {
   name                       = "aks-diagnostics"
   target_resource_id         = azurerm_kubernetes_cluster.main.id
-  log_analytics_workspace_id = var.log_analytics_workspace_id
+  log_analytics_workspace_id = var.log_analytics_workspace_id 
 
   enabled_log {
     category = "kube-apiserver"

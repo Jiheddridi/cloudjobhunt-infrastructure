@@ -1,12 +1,9 @@
-from fastapi import FastAPI
+"""
+CloudJobHunt - Main entry point
+Import the app from app.main to avoid duplication
+"""
+from app.main import app
 
-app = FastAPI()
-
-@app.get("/health")
-def health():
-    return {"status": "ok"}
-
-@app.get("/")
-def root():
-    return {"message": "n7eb nesl alik cv wala lee w habitch eli ysir Ysir ,juste koli cv wala lee"}
+# This module serves as the entry point for uvicorn: uvicorn main:app
+__all__ = ['app']
 

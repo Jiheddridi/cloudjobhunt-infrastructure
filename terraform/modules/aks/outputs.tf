@@ -11,3 +11,6 @@ output "kube_config" {
   sensitive = true
 }
 
+output "ingress_public_ip_id" {
+  value = azurerm_public_ip.ingress.id
+}
