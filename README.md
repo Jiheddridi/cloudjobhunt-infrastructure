@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # CloudJobHunt AI - Infrastructure as Code
 
 ## 🏗️ Architecture
@@ -29,9 +28,16 @@ terraform destroy
 ```
 terraform/
 ├── modules/           # Code réutilisable
-│   └── networking/    # Module réseau
+│   ├── acr/           # Azure Container Registry
+│   ├── aks/           # Azure Kubernetes Service
+│   ├── database/      # PostgreSQL Flexible
+│   ├── monitoring/    # Log Analytics
+│   └── networking/    # VNet, Subnets, NSG
 └── environments/      # Configurations par environnement
     └── dev/           # Environnement développement
+
+k8s/                   # Manifests Kubernetes
+ansible/               # Playbooks Ansible (future utilisation)
 ```
 
 ## 🔐 Sécurité
@@ -39,7 +45,28 @@ terraform/
 - Network Security Groups configurés
 - Subnets isolés par fonction
 - Tags pour gestion des coûts
-=======
-# cloudjobhunt-infrastructure
-cloudjobhunt-infrastructure
->>>>>>> origin/main
+- Azure AD RBAC pour AKS
+- Private DNS pour base de données
+
+## 📦 Composants
+
+| Composant | Description |
+|-----------|-------------|
+| **AKS** | Cluster Kubernetes avec 2 node pools |
+| **ACR** | Azure Container Registry |
+| **PostgreSQL** | Flexible Server avec accès privé |
+| **Log Analytics** | Monitoring et Container Insights |
+
+## 🧪 Tests
+
+```bash
+# Tester l'application locale
+python -m venv .venv
+. .venv/bin/activate
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8000
+
+# Tester Docker
+docker build -t cloudjobhunt-backend:latest .
+docker run -p 8000:8000 cloudjobhunt-backend:latest
+```

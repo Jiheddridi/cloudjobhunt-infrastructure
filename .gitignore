@@ -3,7 +3,8 @@
 **/.terraform.lock.hcl
 **/terraform.tfstate
 **/terraform.tfstate.backup
-**/*.tfvars  # Ne jamais commit les secrets
+**/*.tfvars
+**/*.tfplan
 
 # IDE
 .vscode/
@@ -12,7 +13,21 @@
 # OS
 .DS_Store
 Thumbs.db
+
+# Python
 venv/
+.venv/
 __pycache__/
 *.pyc
-.env
+*.pyo
+*.pyd
+.Python
+
+# Docker
+*.log
+.docker/
+
+# Secrets
+*.pem
+*.key
+jenkins-credentials.txt
