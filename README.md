@@ -2,7 +2,6 @@
 # 🎯 CloudJobHunt - Enterprise AI Job Search Platform
 
 <div align="center">
- ![ChatGPT Image 31 janv  2026, 21_58_01](https://github.com/user-attachments/assets/e8e4ed81-80b3-46d4-8fdb-afc1d8012599)
 
 ![CloudJobHunt](https://img.shields.io/badge/CloudJobHunt-AI%20Powered-blue?style=for-the-badge)
 
@@ -21,6 +20,7 @@
 [🚀 Quick Start](#-quick-start) • [📚 Documentation](#-documentation) • [🛠️ Architecture](#-architecture) • [📊 Monitoring](#-monitoring--observability) • [🔐 Security](#-security-architecture)
 
 </div>
+                ![ChatGPT Image 31 janv  2026, 21_58_01](https://github.com/user-attachments/assets/e8e4ed81-80b3-46d4-8fdb-afc1d8012599)
 
 ---
 
