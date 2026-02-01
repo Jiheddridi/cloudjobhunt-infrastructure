@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: acrcloudhuntdev.azurecr.io/cloudjobhunt-backend:v2
+        image: acrcloudhuntdev.azurecr.io/cloudjobhunt-backend:v3
         ports:
         - containerPort: 8000
           name: http

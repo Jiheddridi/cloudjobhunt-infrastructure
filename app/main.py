@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.database import init_db
-from app.api import auth, users, jobs
+from app.api import auth, users, jobs, frontend
 
 
 def create_app() -> FastAPI:
@@ -35,6 +35,7 @@ def create_app() -> FastAPI:
     app.include_router(auth.router, prefix=settings.API_V1_PREFIX, tags=["Authentication"])
     app.include_router(users.router, prefix=settings.API_V1_PREFIX, tags=["Users"])
     app.include_router(jobs.router, prefix=settings.API_V1_PREFIX, tags=["Jobs"])
+    app.include_router(frontend.router, tags=["Frontend"])
     
     @app.get("/")
     async def root():
