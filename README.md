@@ -910,3 +910,4 @@ If you're new to these technologies, here are some helpful resources:
 Made with ❤️ and ☕ by [Jihed Dridi](https://github.com/Jiheddridi)
 
 </div>
+<- SQLite job Test automatique Jenkins dim. 15 févr. 2026 00:17:51 CET -->
