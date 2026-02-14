@@ -1,0 +1,1348 @@
+{
+  "version": 4,
+  "terraform_version": "1.14.4",
+  "serial": 119,
+  "lineage": "2f22ae38-1b2b-cae1-9506-b66140440e7b",
+  "outputs": {
+    "acr_login_server": {
+      "value": "jobhuntacr.azurecr.io",
+      "type": "string"
+    },
+    "aks_cluster_name": {
+      "value": "jobhunt-aks",
+      "type": "string"
+    },
+    "aks_kubectl_configure_command": {
+      "value": "az aks get-credentials --resource-group jobhunt-dev-rg --name jobhunt-aks",
+      "type": "string"
+    },
+    "current_object_id": {
+      "value": "28f5389b-bbdc-40b9-a07e-bf70f45e73bb",
+      "type": "string"
+    },
+    "current_subscription_id": {
+      "value": "3f18d2a9-b3b3-41fd-9201-3c2d4b085a53",
+      "type": "string"
+    },
+    "current_tenant_id": {
+      "value": "604f1a96-cbe8-43f8-abbf-f8eaf5d85730",
+      "type": "string"
+    },
+    "database_fqdn": {
+      "value": "jobhunt-db.postgres.database.azure.com",
+      "type": "string"
+    },
+    "database_name": {
+      "value": "jobs",
+      "type": "string"
+    },
+    "key_vault_uri": {
+      "value": "https://jobhunt-kv-efid.vault.azure.net/",
+      "type": "string"
+    },
+    "log_analytics_workspace_id": {
+      "value": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.OperationalInsights/workspaces/jobhunt-logs-3Bd4",
+      "type": "string"
+    },
+    "resource_group_name": {
+      "value": "jobhunt-dev-rg",
+      "type": "string"
+    },
+    "vnet_id": {
+      "value": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Network/virtualNetworks/jobhunt-vnet",
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "mode": "data",
+      "type": "azurerm_client_config",
+      "name": "current",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "client_id": "04b07795-8ddb-461a-bbee-02f9e1bf7b46",
+            "id": "Y2xpZW50Q29uZmlncy9jbGllbnRJZD0wNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDY7b2JqZWN0SWQ9MjhmNTM4OWItYmJkYy00MGI5LWEwN2UtYmY3MGY0NWU3M2JiO3N1YnNjcmlwdGlvbklkPTNmMThkMmE5LWIzYjMtNDFmZC05MjAxLTNjMmQ0YjA4NWE1Mzt0ZW5hbnRJZD02MDRmMWE5Ni1jYmU4LTQzZjgtYWJiZi1mOGVhZjVkODU3MzA=",
+            "object_id": "28f5389b-bbdc-40b9-a07e-bf70f45e73bb",
+            "subscription_id": "3f18d2a9-b3b3-41fd-9201-3c2d4b085a53",
+            "tenant_id": "604f1a96-cbe8-43f8-abbf-f8eaf5d85730",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_application_insights",
+      "name": "main",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 2,
+          "attributes": {
+            "app_id": "afcadb49-ffde-4f8a-93e0-c8b3320647e8",
+            "application_type": "web",
+            "connection_string": "InstrumentationKey=dfb1100c-22df-4d91-9079-1195575502d5;IngestionEndpoint=https://francecentral-1.in.applicationinsights.azure.com/;LiveEndpoint=https://francecentral.livediagnostics.monitor.azure.com/;ApplicationId=afcadb49-ffde-4f8a-93e0-c8b3320647e8",
+            "daily_data_cap_in_gb": 100,
+            "daily_data_cap_notifications_disabled": false,
+            "disable_ip_masking": false,
+            "force_customer_storage_for_profiler": false,
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Insights/components/jobhunt-ai",
+            "instrumentation_key": "dfb1100c-22df-4d91-9079-1195575502d5",
+            "internet_ingestion_enabled": true,
+            "internet_query_enabled": true,
+            "local_authentication_disabled": false,
+            "location": "francecentral",
+            "name": "jobhunt-ai",
+            "resource_group_name": "jobhunt-dev-rg",
+            "retention_in_days": 90,
+            "sampling_percentage": 100,
+            "tags": {
+              "CostCenter": "Education",
+              "CreatedBy": "Terraform",
+              "Environment": "Dev",
+              "Owner": "Jiheddridi",
+              "Project": "JobHunt",
+              "StartDate": "2025-01-15"
+            },
+            "timeouts": null,
+            "workspace_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.OperationalInsights/workspaces/jobhunt-logs-3Bd4"
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "connection_string"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "instrumentation_key"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozNjAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIyIn0=",
+          "dependencies": [
+            "azurerm_log_analytics_workspace.main",
+            "azurerm_resource_group.main",
+            "random_string.workspace_suffix"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_container_registry",
+      "name": "main",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 2,
+          "attributes": {
+            "admin_enabled": false,
+            "admin_password": "",
+            "admin_username": "",
+            "anonymous_pull_enabled": false,
+            "data_endpoint_enabled": false,
+            "encryption": [
+              {
+                "enabled": false,
+                "identity_client_id": "",
+                "key_vault_key_id": ""
+              }
+            ],
+            "export_policy_enabled": true,
+            "georeplications": [],
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.ContainerRegistry/registries/jobhuntacr",
+            "identity": [],
+            "location": "francecentral",
+            "login_server": "jobhuntacr.azurecr.io",
+            "name": "jobhuntacr",
+            "network_rule_bypass_option": "AzureServices",
+            "network_rule_set": [],
+            "public_network_access_enabled": true,
+            "quarantine_policy_enabled": false,
+            "resource_group_name": "jobhunt-dev-rg",
+            "retention_policy": [
+              {
+                "days": 7,
+                "enabled": false
+              }
+            ],
+            "sku": "Basic",
+            "tags": {
+              "CostCenter": "Education",
+              "CreatedBy": "Terraform",
+              "Environment": "Dev",
+              "Owner": "Jiheddridi",
+              "Project": "JobHunt",
+              "StartDate": "2025-01-15"
+            },
+            "timeouts": null,
+            "trust_policy": [
+              {
+                "enabled": false
+              }
+            ],
+            "zone_redundancy_enabled": false
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "admin_password"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIyIn0=",
+          "dependencies": [
+            "azurerm_resource_group.main"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_key_vault",
+      "name": "main",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 2,
+          "attributes": {
+            "access_policy": [
+              {
+                "application_id": "",
+                "certificate_permissions": [],
+                "key_permissions": [],
+                "object_id": "28f5389b-bbdc-40b9-a07e-bf70f45e73bb",
+                "secret_permissions": [
+                  "Backup",
+                  "Delete",
+                  "Get",
+                  "List",
+                  "Purge",
+                  "Recover",
+                  "Restore",
+                  "Set"
+                ],
+                "storage_permissions": [],
+                "tenant_id": "604f1a96-cbe8-43f8-abbf-f8eaf5d85730"
+              },
+              {
+                "application_id": "",
+                "certificate_permissions": [],
+                "key_permissions": [],
+                "object_id": "e413550a-7caf-4851-aac7-1018b8b0afc8",
+                "secret_permissions": [
+                  "Get",
+                  "List"
+                ],
+                "storage_permissions": [],
+                "tenant_id": "604f1a96-cbe8-43f8-abbf-f8eaf5d85730"
+              }
+            ],
+            "contact": [],
+            "enable_rbac_authorization": false,
+            "enabled_for_deployment": false,
+            "enabled_for_disk_encryption": true,
+            "enabled_for_template_deployment": false,
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.KeyVault/vaults/jobhunt-kv-EfId",
+            "location": "francecentral",
+            "name": "jobhunt-kv-EfId",
+            "network_acls": [
+              {
+                "bypass": "AzureServices",
+                "default_action": "Allow",
+                "ip_rules": [],
+                "virtual_network_subnet_ids": []
+              }
+            ],
+            "public_network_access_enabled": true,
+            "purge_protection_enabled": false,
+            "resource_group_name": "jobhunt-dev-rg",
+            "sku_name": "standard",
+            "soft_delete_retention_days": 90,
+            "tags": {
+              "CostCenter": "Education",
+              "CreatedBy": "Terraform",
+              "Environment": "Dev",
+              "Owner": "Jiheddridi",
+              "Project": "JobHunt",
+              "StartDate": "2025-01-15"
+            },
+            "tenant_id": "604f1a96-cbe8-43f8-abbf-f8eaf5d85730",
+            "timeouts": null,
+            "vault_uri": "https://jobhunt-kv-efid.vault.azure.net/"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIyIn0=",
+          "dependencies": [
+            "azurerm_resource_group.main",
+            "azurerm_user_assigned_identity.aks",
+            "data.azurerm_client_config.current",
+            "random_string.kv_suffix"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_key_vault_secret",
+      "name": "acr_login_server",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "content_type": "",
+            "expiration_date": null,
+            "id": "https://jobhunt-kv-efid.vault.azure.net/secrets/acr-login-server/d58eb5ca99b94d29bb650ef4e9c025f8",
+            "key_vault_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.KeyVault/vaults/jobhunt-kv-EfId",
+            "name": "acr-login-server",
+            "not_before_date": null,
+            "resource_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.KeyVault/vaults/jobhunt-kv-EfId/secrets/acr-login-server/versions/d58eb5ca99b94d29bb650ef4e9c025f8",
+            "resource_versionless_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.KeyVault/vaults/jobhunt-kv-EfId/secrets/acr-login-server",
+            "tags": {},
+            "timeouts": null,
+            "value": "jobhuntacr.azurecr.io",
+            "version": "d58eb5ca99b94d29bb650ef4e9c025f8",
+            "versionless_id": "https://jobhunt-kv-efid.vault.azure.net/secrets/acr-login-server"
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "value"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjE4MDAwMDAwMDAwMDAsInVwZGF0ZSI6MTgwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "azurerm_container_registry.main",
+            "azurerm_key_vault.main",
+            "azurerm_resource_group.main",
+            "azurerm_user_assigned_identity.aks",
+            "data.azurerm_client_config.current",
+            "random_string.kv_suffix"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_key_vault_secret",
+      "name": "db_connection_string",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "content_type": "",
+            "expiration_date": null,
+            "id": "https://jobhunt-kv-efid.vault.azure.net/secrets/database-connection-string/6c4b56fe42bd467ba20d2bf7241e9c7f",
+            "key_vault_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.KeyVault/vaults/jobhunt-kv-EfId",
+            "name": "database-connection-string",
+            "not_before_date": null,
+            "resource_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.KeyVault/vaults/jobhunt-kv-EfId/secrets/database-connection-string/versions/6c4b56fe42bd467ba20d2bf7241e9c7f",
+            "resource_versionless_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.KeyVault/vaults/jobhunt-kv-EfId/secrets/database-connection-string",
+            "tags": {},
+            "timeouts": null,
+            "value": "postgresql://dbadmin:#]vPZp[cAgcL\u003e}e(:G{qBQ=A26:Ad5dX@jobhunt-db.postgres.database.azure.com:5432/jobs",
+            "version": "6c4b56fe42bd467ba20d2bf7241e9c7f",
+            "versionless_id": "https://jobhunt-kv-efid.vault.azure.net/secrets/database-connection-string"
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "value"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjE4MDAwMDAwMDAwMDAsInVwZGF0ZSI6MTgwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "azurerm_key_vault.main",
+            "azurerm_postgresql_flexible_server.main",
+            "azurerm_private_dns_zone.postgres",
+            "azurerm_private_dns_zone_virtual_network_link.postgres",
+            "azurerm_resource_group.main",
+            "azurerm_subnet.database",
+            "azurerm_user_assigned_identity.aks",
+            "azurerm_virtual_network.main",
+            "data.azurerm_client_config.current",
+            "random_password.postgres_password",
+            "random_string.kv_suffix"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_key_vault_secret",
+      "name": "db_password",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "content_type": "",
+            "expiration_date": null,
+            "id": "https://jobhunt-kv-efid.vault.azure.net/secrets/database-admin-password/bfae78ba09334c818ed88dd155095c0c",
+            "key_vault_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.KeyVault/vaults/jobhunt-kv-EfId",
+            "name": "database-admin-password",
+            "not_before_date": null,
+            "resource_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.KeyVault/vaults/jobhunt-kv-EfId/secrets/database-admin-password/versions/bfae78ba09334c818ed88dd155095c0c",
+            "resource_versionless_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.KeyVault/vaults/jobhunt-kv-EfId/secrets/database-admin-password",
+            "tags": {},
+            "timeouts": null,
+            "value": "#]vPZp[cAgcL\u003e}e(:G{qBQ=A26:Ad5dX",
+            "version": "bfae78ba09334c818ed88dd155095c0c",
+            "versionless_id": "https://jobhunt-kv-efid.vault.azure.net/secrets/database-admin-password"
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "value"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjE4MDAwMDAwMDAwMDAsInVwZGF0ZSI6MTgwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "azurerm_key_vault.main",
+            "azurerm_resource_group.main",
+            "azurerm_user_assigned_identity.aks",
+            "data.azurerm_client_config.current",
+            "random_password.postgres_password",
+            "random_string.kv_suffix"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_kubernetes_cluster",
+      "name": "main",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 2,
+          "attributes": {
+            "aci_connector_linux": [],
+            "api_server_access_profile": [],
+            "api_server_authorized_ip_ranges": [],
+            "auto_scaler_profile": [
+              {
+                "balance_similar_node_groups": false,
+                "empty_bulk_delete_max": "10",
+                "expander": "random",
+                "max_graceful_termination_sec": "600",
+                "max_node_provisioning_time": "15m",
+                "max_unready_nodes": 3,
+                "max_unready_percentage": 45,
+                "new_pod_scale_up_delay": "0s",
+                "scale_down_delay_after_add": "10m",
+                "scale_down_delay_after_delete": "10s",
+                "scale_down_delay_after_failure": "3m",
+                "scale_down_unneeded": "10m",
+                "scale_down_unready": "20m",
+                "scale_down_utilization_threshold": "0.5",
+                "scan_interval": "10s",
+                "skip_nodes_with_local_storage": false,
+                "skip_nodes_with_system_pods": true
+              }
+            ],
+            "automatic_channel_upgrade": "",
+            "azure_active_directory_role_based_access_control": [],
+            "azure_policy_enabled": false,
+            "confidential_computing": [],
+            "cost_analysis_enabled": false,
+            "current_kubernetes_version": "1.34.2",
+            "custom_ca_trust_certificates_base64": null,
+            "default_node_pool": [
+              {
+                "capacity_reservation_group_id": "",
+                "custom_ca_trust_enabled": false,
+                "enable_auto_scaling": true,
+                "enable_host_encryption": false,
+                "enable_node_public_ip": false,
+                "fips_enabled": false,
+                "gpu_instance": "",
+                "host_group_id": "",
+                "kubelet_config": [],
+                "kubelet_disk_type": "OS",
+                "linux_os_config": [],
+                "max_count": 3,
+                "max_pods": 30,
+                "message_of_the_day": "",
+                "min_count": 1,
+                "name": "default",
+                "node_count": 2,
+                "node_labels": {},
+                "node_network_profile": [],
+                "node_public_ip_prefix_id": "",
+                "node_taints": null,
+                "only_critical_addons_enabled": false,
+                "orchestrator_version": "1.34",
+                "os_disk_size_gb": 30,
+                "os_disk_type": "Managed",
+                "os_sku": "Ubuntu",
+                "pod_subnet_id": "",
+                "proximity_placement_group_id": "",
+                "scale_down_mode": "Delete",
+                "snapshot_id": "",
+                "tags": null,
+                "temporary_name_for_rotation": "",
+                "type": "VirtualMachineScaleSets",
+                "ultra_ssd_enabled": false,
+                "upgrade_settings": [
+                  {
+                    "drain_timeout_in_minutes": 0,
+                    "max_surge": "10%",
+                    "node_soak_duration_in_minutes": 0
+                  }
+                ],
+                "vm_size": "Standard_B2s",
+                "vnet_subnet_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Network/virtualNetworks/jobhunt-vnet/subnets/jobhunt-aks-subnet",
+                "workload_runtime": "",
+                "zones": null
+              }
+            ],
+            "disk_encryption_set_id": "",
+            "dns_prefix": "jobhunt",
+            "dns_prefix_private_cluster": "",
+            "edge_zone": "",
+            "enable_pod_security_policy": false,
+            "fqdn": "jobhunt-ecaqhy6d.hcp.francecentral.azmk8s.io",
+            "http_application_routing_enabled": false,
+            "http_application_routing_zone_name": "",
+            "http_proxy_config": [],
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.ContainerService/managedClusters/jobhunt-aks",
+            "identity": [
+              {
+                "identity_ids": [
+                  "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jobhunt-aks-identity"
+                ],
+                "principal_id": "",
+                "tenant_id": "",
+                "type": "UserAssigned"
+              }
+            ],
+            "image_cleaner_enabled": false,
+            "image_cleaner_interval_hours": 48,
+            "ingress_application_gateway": [],
+            "key_management_service": [],
+            "key_vault_secrets_provider": [],
+            "kube_admin_config": [],
+            "kube_admin_config_raw": "",
+            "kube_config": [
+              {
+                "client_certificate": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUZIVENDQXdXZ0F3SUJBZ0lRVzAvenZoU3UxUDhZOGYyWjV2WWJsekFOQmdrcWhraUc5dzBCQVFzRkFEQU4KTVFzd0NRWURWUVFERXdKallUQWVGdzB5TmpBeU1Ea3hOakU1TVRoYUZ3MHlPREF5TURreE5qSTVNVGhhTURBeApGekFWQmdOVkJBb1REbk41YzNSbGJUcHRZWE4wWlhKek1SVXdFd1lEVlFRREV3eHRZWE4wWlhKamJHbGxiblF3CmdnSWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUNEd0F3Z2dJS0FvSUNBUURCNCtnOE9aT08wSjNmWlVpRVNNaE4KdGhoNm1mQ2ZmTkhMei9INUJob25oeFowSzhsUmpKMHIycXFTVC9qOHlFMzFPYk1hL05hSVVkWFp2ZTh4QkU3QwpGSllzNGxHZ2sySjkyS1RFOGQ3MFFhdVBvTWZNV29jWjNUQWphekFOWlhEQUxITlFFNU1BYkhkblZZbjBHUFhjCjVieDhuQkdHS0svVm5hWi9mTS9JZVh4ZVNIZkcxSnFtZnZ4d09wSlpka0NoZy9vT0JCVXZSMzMweDA0b1Q3ZDEKdHJBL2VyNGttbElsbXVaRjVaMnFoZUJiZWNPUUthZWlNbEI4MTdBZlUwaEIrdzk1eXRGQ2FobmRudVIvbmdYTwp4d1E2Sk9mMGVENXNKNDB6RmZnUlFGQVB2eDBxK2NFK091UlVWMnIzaVdkK2p4M0JvZWYzUmVPc01GTUxQc0M4CkdWUUI5VUs2YzZRRXZ2d2RMVDl4dFJWL3ptcnQveXFoc2pOSHVQcXFLZkNhY2NkVHdBT1NHdTdtKzM0S2t1clgKUm1mVFJ0dWh0UWg2ek9ldkFFTTRyZ2tsRjU3Q0VGSmZ5RGI3ZHRQQnNEMTZKMTRFaGp2QVQ3TkFCT1cxNjN4VgpFaUtwRnhsYlJmU0xYVDVpRW52UU9Rd3lBN1oreEM1MGxEQUdLV21nZVlIaSthUDhhdzFQZGcwZmZCQ0Y1Q1BoCmozMGpOUFZybTB0a2ROSVZSR2NWSTJuMVo4Um1XaHFRRk03SEh0TzhpTTl0d2ozZ0h3UEhFVllXeG0waXNSM1UKQ0VjY1JDenF5bWtsU25QdkVBRnA3dFl1amM5ZkVhSVVhdTlJdFJsRnRhemFPbDBFOElPUElvdVhmaUN0OE9mZApTL05jMzJRR1ViWDhjVjhEaUpQaHN3SURBUUFCbzFZd1ZEQU9CZ05WSFE4QkFmOEVCQU1DQmFBd0V3WURWUjBsCkJBd3dDZ1lJS3dZQkJRVUhBd0l3REFZRFZSMFRBUUgvQkFJd0FEQWZCZ05WSFNNRUdEQVdnQlRKMHp3N1doa2MKaGRERWNyMG4wQ01QK1B6ZG56QU5CZ2txaGtpRzl3MEJBUXNGQUFPQ0FnRUF3eFoxdjczRU5vMkRRNTZJL1h6Uwo3SU94Y0tYV2ZzL2dYbnM2bEZhcEd6V1JDcUgrbGdCNURhMnQvN0I4NlJCUnpVekhWVUt4eGpIUUZyaHZBSzhKClBjclRwRzJjS2Nyamt3cStxdmpGb05LMGoyUmtWNGc5V2dMZ2NzdldCb2FYUUx2cVE1cDdhWU9lSkcwbVdjK1UKY3dCM2hVcHNFWFBMaDF3aDExVVFtOTBzV0UweWhzVll4TG5MVDhWemVJZ1NlOHJYN0dDRGgvc2tLMnJZc1dlQQpFZGpzSEdYTWg1MFJjakQvQTE1VnBMWWZBY2Q1THB4b1lERm5pNHhvZjFITTdxbUxmZklxS1dRNXNpZGcwK3c5CmI1VkhxVk9MNjl2NTJvY2NnUnBZZnpZNXdJdDBUTDRBMHZDRC9IOHl0ZGNsL1hCZiszTGdBUlIxbTczVFVLaEYKSjNabHIzWG1hRjNWLzdyaGhESFdQV0dMVnBRVEY3eTJBUlJ2V1oyeVkwRDZDU1ROakNrMVlmWkxPbFM1ZmZjYgpzdW1DRlRwY1J3aUZZZXJ4cVU3N0x0U1AzcW55b3hTRFJPMGJBQ0lQSTVxclVsOFI5L0w4TU5BUy9aNUR1a3ZKCllYeFZma25BTlMwWTBoYWR2LzQvWisvc0VramlxRUhtcG9VYktxSzJLTUFXenVSMUFMeTZXUzNFak9VSWFNY2MKUUpnZGJWcUtyemNwVHU1WkNJVXpKdWNzVFJZRkFiaVpiOG01WmhCYW1qeTdHVi9VdmRtWjRCYWQvZ3R6ZnVyTQo5RkN4bUFNODJNMjdUNzIxaW5Gd1B3di9uUk1lUFU3T2E4LzRQbzV6RlMwYzd5RlZSY1hkamFvOU5vZFVpQ1VuCmRVcW04S2hFMDRKUXV4czJkRlNDa0NBPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==",
+                "client_key": "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlKS1FJQkFBS0NBZ0VBd2VQb1BEbVRqdENkMzJWSWhFaklUYllZZXBud24zelJ5OC94K1FZYUo0Y1dkQ3ZKClVZeWRLOXFxa2svNC9NaE45VG16R3Z6V2lGSFYyYjN2TVFST3doU1dMT0pSb0pOaWZkaWt4UEhlOUVHcmo2REgKekZxSEdkMHdJMnN3RFdWd3dDeHpVQk9UQUd4M1oxV0o5QmoxM09XOGZKd1JoaWl2MVoybWYzelB5SGw4WGtoMwp4dFNhcG43OGNEcVNXWFpBb1lQNkRnUVZMMGQ5OU1kT0tFKzNkYmF3UDNxK0pKcFNKWnJtUmVXZHFvWGdXM25ECmtDbW5vakpRZk5ld0gxTklRZnNQZWNyUlFtb1ozWjdrZjU0RnpzY0VPaVRuOUhnK2JDZU5NeFg0RVVCUUQ3OGQKS3ZuQlBqcmtWRmRxOTRsbmZvOGR3YUhuOTBYanJEQlRDejdBdkJsVUFmVkN1bk9rQkw3OEhTMC9jYlVWZjg1cQo3Zjhxb2JJelI3ajZxaW53bW5ISFU4QURraHJ1NXZ0K0NwTHExMFpuMDBiYm9iVUllc3pucndCRE9LNEpKUmVlCndoQlNYOGcyKzNiVHdiQTllaWRlQklZN3dFK3pRQVRsdGV0OFZSSWlxUmNaVzBYMGkxMCtZaEo3MERrTU1nTzIKZnNRdWRKUXdCaWxwb0htQjR2bWovR3NOVDNZTkgzd1FoZVFqNFk5OUl6VDFhNXRMWkhUU0ZVUm5GU05wOVdmRQpabG9ha0JUT3h4N1R2SWpQYmNJOTRCOER4eEZXRnNadElyRWQxQWhISEVRczZzcHBKVXB6N3hBQmFlN1dMbzNQClh4R2lGR3J2U0xVWlJiV3MyanBkQlBDRGp5S0xsMzRncmZEbjNVdnpYTjlrQmxHMS9IRmZBNGlUNGJNQ0F3RUEKQVFLQ0FnQVhmZW9pOWVUcmZscEtlV2FXWkkwa1lVWkpBSUxYaUJPUlNySXFObk9QeTMzTWVJdXRYa2lpeWgwMQptZ3YwY0w2RlVrYmhvN1hJa1lYRUdvK3pGQzhJczk3WU5GbW9oNEw4OVhWTlNYTDJqRWhob0J6bEpTak9XTzdlCnM3dUFQQVN6dkE4Q3FrUjYzaWwvY3kxQ1RvM25oRXhZbXI1Q3o0WXlieVgvdDFzamtwaWZnYzlGWDNnWGFUWmoKMEt6dnV2U3N2U1ZjY21Fd3Q4eEtqcVZwRy9PQ0J5OEdtZlFVMGovV3Y1UmI3cXl5UHdOR2doUFFVVU8yMHJyTwp6WUZRNGxIVWNMdFl5ZHFkM2VZaFpJR1I5czhFVlRldFpkQlczZ1RPTE9LZVNIQ2tnbkxRM1pxR25Qa3RkWXc1CnJkZlBneTN2ZHg2bldkc1Zxam1pSUw3SEU0VGRiNFBjVkR2aDEzanpXd0VXZ09oTHlYQ2tIUHV6SThOYTBSMWMKcXlHMGQyRzkycVZTK0FGSFg2MVRkeG9Hd3lzTHhla3lLbWtwRjhwSUhEZVp0WkVXQWtKSUh3OUZRRmd4QUtEUQo5blFadDgzS01SN2RDRDNkWXpMVVJqM041aXViaFc5OERjeWNUOGZ6MkZ4THhwS1hucHVURHVkOFI5ejg3UWtFClFKQ3VaWCtnS2E5ZEoyTTNabmRocE51OG1KM0xiSGpmTVFRUkp2NFZreG1sakJKeFZwNUpRMjVXMDhtNklpbTcKbGl5Yi9WVWxlWWNPbEpRSnVncEM2M3kvQmd1eGNhL25OSnJoTVdSams2NmtkenQrZ1JLOThrUHBzRTM5S2hqegorVVVLRFJBZkRDQVhDemJQZTlJZEpGOUE5QWNSREhrWkxwS0I5dDJxNk1XNThDbFVDUUtDQVFFQTRnYkx6K0l3CkxvWml3NFlUalNBTkh0U2tWYlpiTXlyWXVYaDk5R0hUbUh4RFBpM1M4bXJJa3dISGVxS2RlTUJQdXZ6STVjOXUKZW9ZT3RvcVRraDlKcDlRYmdUb1lFcmtHSHZFWmRMLzBGWmZRd1h3amRINHhUVEtwZ3BZQjFaUHd3czlxTVk3cgo1QVJoWWNUVkQvaWhDU1ErUitVdVJLU1RKa0lVdGZqY081T1FwTVpsbzhrOEpiK1VyOUk0c2pQeTFVa2NOeGY4Ci9HWjlRa2Y1UGR0Z1NLQ1QwMGtIeG01L01RQWFTbW5xVkxEYzJOekQ5Q0xVbm5CaldWZXJoT0plQndCRldTcUkKV1c5Y3k2NUw0bVg1d1NWTkJhZ1BUR1l2L1ZVbEJlNmhOa2tkSWNocHNnUE5pWlU1VTNnSnR6d1lwQ1BTNHBoQgpCQVoyY0NPQjFXZHNhUUtDQVFFQTI1b2tBaEZYTlBSR1QxV3ZTaTJHRjdMS2ZrWFRhQmFYbE12eVc2a2R0L1ZLCnl2bk10NW52aHVkK0hRTERXbjJkQUdhenFyQmRicGpNd2lXSE05TkFUa1VVb255VGIyaEZKWHVMQkRnaHdNVTUKZngvU3I5MGlJa3pEYXJGek1BM1ZDTzN1dVNoTEtpZWc0My8ra0FSaENoMWlXVnNlRUYzK0w4SEQ4UjBDUS9XRgpvWkFybXZDK0VOaU9lMGJwT1dkK0VxMEFkM3N4SzNPMUFwL0E5UTVVTG9Ka21vSG40Y21SWXBRV1hxS1hEOFBBCnQ3YUNmZ0ZTZE5VQWdOK3NUNGNneUhGaUpTN3FDSGZDMmRlamVPdXM1bUo5UkJGVFY1Q0o4Y1ByZTYzaFlSQUMKSlV0dXlyTE5NeGorbTc0L2IwVGJPTnBOVnNWbTlUTUZTaGNKWW5nSnV3S0NBUUVBbGhqUFJnaTkyRmVUeEtZSAoyOEw2RTR4QWFVOEU5MUN2eFZMM3ljOGhGZlVITG9aOXZGQWZURWgxTU1KR2NvYTdLOEJzcFBnQU5NdExmL3M4CmpsL0txUEhaSmhMdkk1Zk5NY1VJRTVqWlBYR294cVJxWXhUZUpwYkxMSlh6TitMYmtuTHM0V1k0emgzK2tVK0YKOGVvNC9ub2NCZUJ5dmxEUUN5cjgxKzhnU1V2d1ZRd1BPUm9Nb0VDK081Z040SUZROUVSdHdVUmowelU0WDBpdQpnbDVwYlRGOW1XUzVEaFFZMFBCeGhSTWE4d3pVVEFzbThid2psK2VvZ2c4UEx0cW9lRnU4c2I3bDl3WldDRWlCCnlpSFFIbXhuM3FiQktnbitPbXhOZnNmK05LK084ZjFGKzFvOUp1MTZ1U3hRdjJiZ01qZzc5aEFIdE9XWngxUTkKQnZ0OGFRS0NBUUJaVkV0ZmQvUlVleVY2c2kwNjdHZkdqaGttNG5xTHRkejFUejBJSWpRUGw3MVQ4ZWRmckVPdQpTYzZZT0g2RStlSDZ2c3hKRzdMMkFUd1JvYmhzMFhzd0c1TzRRUnFzVCtzSXcwZWFjTWJ5Sm9ncitTTDRIT2o4CnNPTXhMSHZoeVU2bWNqc1FvSjVxeUhIKytScnhOSWJRMllFZlBoeHRwZjUzS01mdTlkRHRHaHZBeStlaEFGc2cKZVNjRWFLVUlqOXZOOXdmZ2tvRSszck44SE1ZZUtUVC9NbFdBTUdYR0IvdVc4UXhrZEpra2RZbVljYXFGWFQ1UQpmakRWTzZkWk5tdVVmZUxobzBMYUxQVmJMZ2UyY1pBRXEzMnZTYWp3VHNCK1V5Y2dTV3dMMHJvOHQ0R2EvTDdTCkVWSEl3c3dGRkNwazV4QmN3cklOL2pJaG9GdFY3ZVJ2QW9JQkFRQ1ljVjhyR042R2llUGM2VTNkcEZrMTNBQTEKUzNXaEM4OXZMMXJybnVBUTZIczNRb3BlbEpkcWE1dStQb1lpcEhUR0s1NURhMkgrSkJQUU9hUmJZQ25vY3RCbQptR2hVbkVHdmdKVkNDYVBhb0psU05hR083cmtjM1IyOXlqUzhBcTVyMTJ3MDQraUJIZU90YXRsNDJwYUUrZFRsCisxU3pQWE1hV3VPUTQrdTN6anRmRWxLOUw2b0Y5bkJzcVNXWHJ0TjNHTXFaakQzaExDeWI2c05OblFEUlhmS1YKdFJtL3dOUUtkWDFNQWxhNHZUSmxPYkNoWU5IdVMxaERrbkhrc20ybUhMZDNmNHRxWWlkN0F4UGo4clB2bmVWLwpqZkd6L1Vjc2hQdFZaTHB3bVVCMytSM3J5RE1xaXB5Sm9tU08zNVZzdGk2dm1nUCt3VjFvR0NGdlk1RWIKLS0tLS1FTkQgUlNBIFBSSVZBVEUgS0VZLS0tLS0K",
+                "cluster_ca_certificate": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUU2VENDQXRHZ0F3SUJBZ0lSQUx5R2RXRVdsbnhDblpHcUNoVWVvV3N3RFFZSktvWklodmNOQVFFTEJRQXcKRFRFTE1Ba0dBMVVFQXhNQ1kyRXdJQmNOTWpZd01qQTVNVFl4T1RFNFdoZ1BNakExTmpBeU1Ea3hOakk1TVRoYQpNQTB4Q3pBSkJnTlZCQU1UQW1OaE1JSUNJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBZzhBTUlJQ0NnS0NBZ0VBCjFXSGdRUWlacG14TUtiV0NoKzBxOTJySVhVdWdaWlNkMUI5eVVjY0NNWTRuNXJ4U1lmS1czeWZqb3MwVFlsOEsKN3daUGhwQTNvbkgwRC8xYnV2YThjbzRETDZSZjlaTS92blpLcjBIazNDazMzcWVqdlozMDgxY0NiL3ZWWUZaSwo3Z2hpSmhLZFBNZDd1QnNqUXhlMzcybG4wbkxVYmpWcFFYYmw3R2RJUFh3S0tIdWgrM0ZPdHlpeExPcU0rY2ViCmNoY2RKYmowOUh3RTBCVURxbk9yRTg0NmlpQXdwZHIraWRsRGI3OGxzWnF0RVRIUHVrZnZ1b1RuSGtYc2VFTUkKd05kLzlGTHdDcUFNNnhQZFBGUmsxcVQwVDRDRFI4M3hjQUMwVG9CRG5mamJwRFJsY283SURrZUxaaThyMzZvRgpiOVQ3ZFJyWGNhSlJXL1ZXTEhyZTJyUGorUGRiYWJPNXY3WFhDQ0R5MXBsak1lMEtwV1NyTU9YZ0JXbFFBd25pCktjOWR1WUhnaXdweEplM1NwQkVjaGFpamdWaUJkek9kVnI5NGVhdjVsV1J4NnRxbXBRS1ZjdVJsUUxpeFRuRHAKVVhwTlA3OU5uMnNyS0MvaksxVzFLb2dmV05pMFRsUjVLVmFjVTJXYkxkcDE1MURYQWVqZGxBbUpURzhpTUNCego5Nm0wTG9pblFiRk5ieVZGNCtvTldpaEdBUGo1ekN6MWRIellwekF5VU8rS1h6UXRlR1gzNUVZZFBnUzdmbkFYCktvNVkwZlJHTFdJbXFrcmRvTjR2eGQrVjZtYjEvNytQc2tPWUJPZ3BhdC9wSW1LeEVEY2w5MFFSbXQzNFlacEcKM1ltckJpUUZnaGFhcXZXQ2xPb1p6YkdoSUF3bk9heDJocUhPWHBmeW13MENBd0VBQWFOQ01FQXdEZ1lEVlIwUApBUUgvQkFRREFnS2tNQThHQTFVZEV3RUIvd1FGTUFNQkFmOHdIUVlEVlIwT0JCWUVGTW5UUER0YUdSeUYwTVJ5CnZTZlFJdy80L04yZk1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQ0FRQ2poOVR5d2oxZDFVcTd3ZVErWU9Udk44MGMKZ0FqYzVIbk5SYTBnV3J5Q0I2clM4SHdzbCtxakd0TjYzTjNxTzdYRXF4MHY0TkltUExMaTRBb2tLaUlDYVhzWApaRlB2ZENiN3I2ZEZnRnoycExhMFkwUUNWYVpmdUtQR2pxbk00SkZKZEFkblZHUjhpZnorSENpWXJMOTVDT0VIClhkVlZQVWxWRklKZkIyTktadGxXK0NFcGR3WGZXOUdkaFFMOGhEd1RseGVXVlFGdS9zSXdQOTJ1blc0MXR6RHYKOWNDK0J4bzhoZHl6TGZ4YTU4REpvdDZ2eENkQzcvOWpDYy9rVkU5MVM3YS9ycHh3OVdQcVJhcFBoT1BkUFJtQQpoTlVRQXJPM1Vkc1BSTzdUTGlNWFlBVHVCVHJENXNSai9ldTZDcVdZamNiVEVRdlZQQmNLYVRrN0FCUm1lVnRMCldMeVQ2QkJxZmVEQmE3eGtXRnZFSHdLN29ZM05oVXFVY3I3b0I3TnZwTitmRmRobTlML1UxaHNNTHhUcGhjYVQKRVczM1l3eUlNbEQ0UUZ3WGF2cHJiUUIrUGVSSVFOVTZObVV3L29CTzNSc3V2RU5lNTA2d3p2Rlk4U21zdDF3NwpKbUwvc1EzdDNFUndLa1AxY0UrWjFlNUhTZ256Umdid0tZRHVlUm8xc2lPWUNWdm9NZ1lTYmkxTEQ3cThWYUNECjJnYjJqcVRjNlRZdGZta082RXdKZlJyYnBUVkNCOVRQM3BLelJLVkpScm5pWUY2RFIyRXVONVUxaSt2VVh5WkEKdVUxL2JGdDExQ3BxaXNXdEM5UTdkK1RHN1lTV0NhUWRBOUt4TDRadmF5bjhuUDVucUIrbmxhM2tTRVVzWGMvZQpxckVFYStFTG9PdERYZjdGM2c9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==",
+                "host": "https://jobhunt-ecaqhy6d.hcp.francecentral.azmk8s.io:443",
+                "password": "c90p9j6hom9q1v1v3fuqf0dxvlbgmyz7gna9iqedq3uo2c6zyhdmw32gil650pylb5gybwxie0gv5mkemz6gulnnu9370vz17njakrodglm1y37ykkqaci5jcqgowa43",
+                "username": "clusterUser_jobhunt-dev-rg_jobhunt-aks"
+              }
+            ],
+            "kube_config_raw": "apiVersion: v1\nclusters:\n- cluster:\n    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUU2VENDQXRHZ0F3SUJBZ0lSQUx5R2RXRVdsbnhDblpHcUNoVWVvV3N3RFFZSktvWklodmNOQVFFTEJRQXcKRFRFTE1Ba0dBMVVFQXhNQ1kyRXdJQmNOTWpZd01qQTVNVFl4T1RFNFdoZ1BNakExTmpBeU1Ea3hOakk1TVRoYQpNQTB4Q3pBSkJnTlZCQU1UQW1OaE1JSUNJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBZzhBTUlJQ0NnS0NBZ0VBCjFXSGdRUWlacG14TUtiV0NoKzBxOTJySVhVdWdaWlNkMUI5eVVjY0NNWTRuNXJ4U1lmS1czeWZqb3MwVFlsOEsKN3daUGhwQTNvbkgwRC8xYnV2YThjbzRETDZSZjlaTS92blpLcjBIazNDazMzcWVqdlozMDgxY0NiL3ZWWUZaSwo3Z2hpSmhLZFBNZDd1QnNqUXhlMzcybG4wbkxVYmpWcFFYYmw3R2RJUFh3S0tIdWgrM0ZPdHlpeExPcU0rY2ViCmNoY2RKYmowOUh3RTBCVURxbk9yRTg0NmlpQXdwZHIraWRsRGI3OGxzWnF0RVRIUHVrZnZ1b1RuSGtYc2VFTUkKd05kLzlGTHdDcUFNNnhQZFBGUmsxcVQwVDRDRFI4M3hjQUMwVG9CRG5mamJwRFJsY283SURrZUxaaThyMzZvRgpiOVQ3ZFJyWGNhSlJXL1ZXTEhyZTJyUGorUGRiYWJPNXY3WFhDQ0R5MXBsak1lMEtwV1NyTU9YZ0JXbFFBd25pCktjOWR1WUhnaXdweEplM1NwQkVjaGFpamdWaUJkek9kVnI5NGVhdjVsV1J4NnRxbXBRS1ZjdVJsUUxpeFRuRHAKVVhwTlA3OU5uMnNyS0MvaksxVzFLb2dmV05pMFRsUjVLVmFjVTJXYkxkcDE1MURYQWVqZGxBbUpURzhpTUNCego5Nm0wTG9pblFiRk5ieVZGNCtvTldpaEdBUGo1ekN6MWRIellwekF5VU8rS1h6UXRlR1gzNUVZZFBnUzdmbkFYCktvNVkwZlJHTFdJbXFrcmRvTjR2eGQrVjZtYjEvNytQc2tPWUJPZ3BhdC9wSW1LeEVEY2w5MFFSbXQzNFlacEcKM1ltckJpUUZnaGFhcXZXQ2xPb1p6YkdoSUF3bk9heDJocUhPWHBmeW13MENBd0VBQWFOQ01FQXdEZ1lEVlIwUApBUUgvQkFRREFnS2tNQThHQTFVZEV3RUIvd1FGTUFNQkFmOHdIUVlEVlIwT0JCWUVGTW5UUER0YUdSeUYwTVJ5CnZTZlFJdy80L04yZk1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQ0FRQ2poOVR5d2oxZDFVcTd3ZVErWU9Udk44MGMKZ0FqYzVIbk5SYTBnV3J5Q0I2clM4SHdzbCtxakd0TjYzTjNxTzdYRXF4MHY0TkltUExMaTRBb2tLaUlDYVhzWApaRlB2ZENiN3I2ZEZnRnoycExhMFkwUUNWYVpmdUtQR2pxbk00SkZKZEFkblZHUjhpZnorSENpWXJMOTVDT0VIClhkVlZQVWxWRklKZkIyTktadGxXK0NFcGR3WGZXOUdkaFFMOGhEd1RseGVXVlFGdS9zSXdQOTJ1blc0MXR6RHYKOWNDK0J4bzhoZHl6TGZ4YTU4REpvdDZ2eENkQzcvOWpDYy9rVkU5MVM3YS9ycHh3OVdQcVJhcFBoT1BkUFJtQQpoTlVRQXJPM1Vkc1BSTzdUTGlNWFlBVHVCVHJENXNSai9ldTZDcVdZamNiVEVRdlZQQmNLYVRrN0FCUm1lVnRMCldMeVQ2QkJxZmVEQmE3eGtXRnZFSHdLN29ZM05oVXFVY3I3b0I3TnZwTitmRmRobTlML1UxaHNNTHhUcGhjYVQKRVczM1l3eUlNbEQ0UUZ3WGF2cHJiUUIrUGVSSVFOVTZObVV3L29CTzNSc3V2RU5lNTA2d3p2Rlk4U21zdDF3NwpKbUwvc1EzdDNFUndLa1AxY0UrWjFlNUhTZ256Umdid0tZRHVlUm8xc2lPWUNWdm9NZ1lTYmkxTEQ3cThWYUNECjJnYjJqcVRjNlRZdGZta082RXdKZlJyYnBUVkNCOVRQM3BLelJLVkpScm5pWUY2RFIyRXVONVUxaSt2VVh5WkEKdVUxL2JGdDExQ3BxaXNXdEM5UTdkK1RHN1lTV0NhUWRBOUt4TDRadmF5bjhuUDVucUIrbmxhM2tTRVVzWGMvZQpxckVFYStFTG9PdERYZjdGM2c9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==\n    server: https://jobhunt-ecaqhy6d.hcp.francecentral.azmk8s.io:443\n  name: jobhunt-aks\ncontexts:\n- context:\n    cluster: jobhunt-aks\n    user: clusterUser_jobhunt-dev-rg_jobhunt-aks\n  name: jobhunt-aks\ncurrent-context: jobhunt-aks\nkind: Config\nusers:\n- name: clusterUser_jobhunt-dev-rg_jobhunt-aks\n  user:\n    client-certificate-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUZIVENDQXdXZ0F3SUJBZ0lRVzAvenZoU3UxUDhZOGYyWjV2WWJsekFOQmdrcWhraUc5dzBCQVFzRkFEQU4KTVFzd0NRWURWUVFERXdKallUQWVGdzB5TmpBeU1Ea3hOakU1TVRoYUZ3MHlPREF5TURreE5qSTVNVGhhTURBeApGekFWQmdOVkJBb1REbk41YzNSbGJUcHRZWE4wWlhKek1SVXdFd1lEVlFRREV3eHRZWE4wWlhKamJHbGxiblF3CmdnSWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUNEd0F3Z2dJS0FvSUNBUURCNCtnOE9aT08wSjNmWlVpRVNNaE4KdGhoNm1mQ2ZmTkhMei9INUJob25oeFowSzhsUmpKMHIycXFTVC9qOHlFMzFPYk1hL05hSVVkWFp2ZTh4QkU3QwpGSllzNGxHZ2sySjkyS1RFOGQ3MFFhdVBvTWZNV29jWjNUQWphekFOWlhEQUxITlFFNU1BYkhkblZZbjBHUFhjCjVieDhuQkdHS0svVm5hWi9mTS9JZVh4ZVNIZkcxSnFtZnZ4d09wSlpka0NoZy9vT0JCVXZSMzMweDA0b1Q3ZDEKdHJBL2VyNGttbElsbXVaRjVaMnFoZUJiZWNPUUthZWlNbEI4MTdBZlUwaEIrdzk1eXRGQ2FobmRudVIvbmdYTwp4d1E2Sk9mMGVENXNKNDB6RmZnUlFGQVB2eDBxK2NFK091UlVWMnIzaVdkK2p4M0JvZWYzUmVPc01GTUxQc0M4CkdWUUI5VUs2YzZRRXZ2d2RMVDl4dFJWL3ptcnQveXFoc2pOSHVQcXFLZkNhY2NkVHdBT1NHdTdtKzM0S2t1clgKUm1mVFJ0dWh0UWg2ek9ldkFFTTRyZ2tsRjU3Q0VGSmZ5RGI3ZHRQQnNEMTZKMTRFaGp2QVQ3TkFCT1cxNjN4VgpFaUtwRnhsYlJmU0xYVDVpRW52UU9Rd3lBN1oreEM1MGxEQUdLV21nZVlIaSthUDhhdzFQZGcwZmZCQ0Y1Q1BoCmozMGpOUFZybTB0a2ROSVZSR2NWSTJuMVo4Um1XaHFRRk03SEh0TzhpTTl0d2ozZ0h3UEhFVllXeG0waXNSM1UKQ0VjY1JDenF5bWtsU25QdkVBRnA3dFl1amM5ZkVhSVVhdTlJdFJsRnRhemFPbDBFOElPUElvdVhmaUN0OE9mZApTL05jMzJRR1ViWDhjVjhEaUpQaHN3SURBUUFCbzFZd1ZEQU9CZ05WSFE4QkFmOEVCQU1DQmFBd0V3WURWUjBsCkJBd3dDZ1lJS3dZQkJRVUhBd0l3REFZRFZSMFRBUUgvQkFJd0FEQWZCZ05WSFNNRUdEQVdnQlRKMHp3N1doa2MKaGRERWNyMG4wQ01QK1B6ZG56QU5CZ2txaGtpRzl3MEJBUXNGQUFPQ0FnRUF3eFoxdjczRU5vMkRRNTZJL1h6Uwo3SU94Y0tYV2ZzL2dYbnM2bEZhcEd6V1JDcUgrbGdCNURhMnQvN0I4NlJCUnpVekhWVUt4eGpIUUZyaHZBSzhKClBjclRwRzJjS2Nyamt3cStxdmpGb05LMGoyUmtWNGc5V2dMZ2NzdldCb2FYUUx2cVE1cDdhWU9lSkcwbVdjK1UKY3dCM2hVcHNFWFBMaDF3aDExVVFtOTBzV0UweWhzVll4TG5MVDhWemVJZ1NlOHJYN0dDRGgvc2tLMnJZc1dlQQpFZGpzSEdYTWg1MFJjakQvQTE1VnBMWWZBY2Q1THB4b1lERm5pNHhvZjFITTdxbUxmZklxS1dRNXNpZGcwK3c5CmI1VkhxVk9MNjl2NTJvY2NnUnBZZnpZNXdJdDBUTDRBMHZDRC9IOHl0ZGNsL1hCZiszTGdBUlIxbTczVFVLaEYKSjNabHIzWG1hRjNWLzdyaGhESFdQV0dMVnBRVEY3eTJBUlJ2V1oyeVkwRDZDU1ROakNrMVlmWkxPbFM1ZmZjYgpzdW1DRlRwY1J3aUZZZXJ4cVU3N0x0U1AzcW55b3hTRFJPMGJBQ0lQSTVxclVsOFI5L0w4TU5BUy9aNUR1a3ZKCllYeFZma25BTlMwWTBoYWR2LzQvWisvc0VramlxRUhtcG9VYktxSzJLTUFXenVSMUFMeTZXUzNFak9VSWFNY2MKUUpnZGJWcUtyemNwVHU1WkNJVXpKdWNzVFJZRkFiaVpiOG01WmhCYW1qeTdHVi9VdmRtWjRCYWQvZ3R6ZnVyTQo5RkN4bUFNODJNMjdUNzIxaW5Gd1B3di9uUk1lUFU3T2E4LzRQbzV6RlMwYzd5RlZSY1hkamFvOU5vZFVpQ1VuCmRVcW04S2hFMDRKUXV4czJkRlNDa0NBPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==\n    client-key-data: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlKS1FJQkFBS0NBZ0VBd2VQb1BEbVRqdENkMzJWSWhFaklUYllZZXBud24zelJ5OC94K1FZYUo0Y1dkQ3ZKClVZeWRLOXFxa2svNC9NaE45VG16R3Z6V2lGSFYyYjN2TVFST3doU1dMT0pSb0pOaWZkaWt4UEhlOUVHcmo2REgKekZxSEdkMHdJMnN3RFdWd3dDeHpVQk9UQUd4M1oxV0o5QmoxM09XOGZKd1JoaWl2MVoybWYzelB5SGw4WGtoMwp4dFNhcG43OGNEcVNXWFpBb1lQNkRnUVZMMGQ5OU1kT0tFKzNkYmF3UDNxK0pKcFNKWnJtUmVXZHFvWGdXM25ECmtDbW5vakpRZk5ld0gxTklRZnNQZWNyUlFtb1ozWjdrZjU0RnpzY0VPaVRuOUhnK2JDZU5NeFg0RVVCUUQ3OGQKS3ZuQlBqcmtWRmRxOTRsbmZvOGR3YUhuOTBYanJEQlRDejdBdkJsVUFmVkN1bk9rQkw3OEhTMC9jYlVWZjg1cQo3Zjhxb2JJelI3ajZxaW53bW5ISFU4QURraHJ1NXZ0K0NwTHExMFpuMDBiYm9iVUllc3pucndCRE9LNEpKUmVlCndoQlNYOGcyKzNiVHdiQTllaWRlQklZN3dFK3pRQVRsdGV0OFZSSWlxUmNaVzBYMGkxMCtZaEo3MERrTU1nTzIKZnNRdWRKUXdCaWxwb0htQjR2bWovR3NOVDNZTkgzd1FoZVFqNFk5OUl6VDFhNXRMWkhUU0ZVUm5GU05wOVdmRQpabG9ha0JUT3h4N1R2SWpQYmNJOTRCOER4eEZXRnNadElyRWQxQWhISEVRczZzcHBKVXB6N3hBQmFlN1dMbzNQClh4R2lGR3J2U0xVWlJiV3MyanBkQlBDRGp5S0xsMzRncmZEbjNVdnpYTjlrQmxHMS9IRmZBNGlUNGJNQ0F3RUEKQVFLQ0FnQVhmZW9pOWVUcmZscEtlV2FXWkkwa1lVWkpBSUxYaUJPUlNySXFObk9QeTMzTWVJdXRYa2lpeWgwMQptZ3YwY0w2RlVrYmhvN1hJa1lYRUdvK3pGQzhJczk3WU5GbW9oNEw4OVhWTlNYTDJqRWhob0J6bEpTak9XTzdlCnM3dUFQQVN6dkE4Q3FrUjYzaWwvY3kxQ1RvM25oRXhZbXI1Q3o0WXlieVgvdDFzamtwaWZnYzlGWDNnWGFUWmoKMEt6dnV2U3N2U1ZjY21Fd3Q4eEtqcVZwRy9PQ0J5OEdtZlFVMGovV3Y1UmI3cXl5UHdOR2doUFFVVU8yMHJyTwp6WUZRNGxIVWNMdFl5ZHFkM2VZaFpJR1I5czhFVlRldFpkQlczZ1RPTE9LZVNIQ2tnbkxRM1pxR25Qa3RkWXc1CnJkZlBneTN2ZHg2bldkc1Zxam1pSUw3SEU0VGRiNFBjVkR2aDEzanpXd0VXZ09oTHlYQ2tIUHV6SThOYTBSMWMKcXlHMGQyRzkycVZTK0FGSFg2MVRkeG9Hd3lzTHhla3lLbWtwRjhwSUhEZVp0WkVXQWtKSUh3OUZRRmd4QUtEUQo5blFadDgzS01SN2RDRDNkWXpMVVJqM041aXViaFc5OERjeWNUOGZ6MkZ4THhwS1hucHVURHVkOFI5ejg3UWtFClFKQ3VaWCtnS2E5ZEoyTTNabmRocE51OG1KM0xiSGpmTVFRUkp2NFZreG1sakJKeFZwNUpRMjVXMDhtNklpbTcKbGl5Yi9WVWxlWWNPbEpRSnVncEM2M3kvQmd1eGNhL25OSnJoTVdSams2NmtkenQrZ1JLOThrUHBzRTM5S2hqegorVVVLRFJBZkRDQVhDemJQZTlJZEpGOUE5QWNSREhrWkxwS0I5dDJxNk1XNThDbFVDUUtDQVFFQTRnYkx6K0l3CkxvWml3NFlUalNBTkh0U2tWYlpiTXlyWXVYaDk5R0hUbUh4RFBpM1M4bXJJa3dISGVxS2RlTUJQdXZ6STVjOXUKZW9ZT3RvcVRraDlKcDlRYmdUb1lFcmtHSHZFWmRMLzBGWmZRd1h3amRINHhUVEtwZ3BZQjFaUHd3czlxTVk3cgo1QVJoWWNUVkQvaWhDU1ErUitVdVJLU1RKa0lVdGZqY081T1FwTVpsbzhrOEpiK1VyOUk0c2pQeTFVa2NOeGY4Ci9HWjlRa2Y1UGR0Z1NLQ1QwMGtIeG01L01RQWFTbW5xVkxEYzJOekQ5Q0xVbm5CaldWZXJoT0plQndCRldTcUkKV1c5Y3k2NUw0bVg1d1NWTkJhZ1BUR1l2L1ZVbEJlNmhOa2tkSWNocHNnUE5pWlU1VTNnSnR6d1lwQ1BTNHBoQgpCQVoyY0NPQjFXZHNhUUtDQVFFQTI1b2tBaEZYTlBSR1QxV3ZTaTJHRjdMS2ZrWFRhQmFYbE12eVc2a2R0L1ZLCnl2bk10NW52aHVkK0hRTERXbjJkQUdhenFyQmRicGpNd2lXSE05TkFUa1VVb255VGIyaEZKWHVMQkRnaHdNVTUKZngvU3I5MGlJa3pEYXJGek1BM1ZDTzN1dVNoTEtpZWc0My8ra0FSaENoMWlXVnNlRUYzK0w4SEQ4UjBDUS9XRgpvWkFybXZDK0VOaU9lMGJwT1dkK0VxMEFkM3N4SzNPMUFwL0E5UTVVTG9Ka21vSG40Y21SWXBRV1hxS1hEOFBBCnQ3YUNmZ0ZTZE5VQWdOK3NUNGNneUhGaUpTN3FDSGZDMmRlamVPdXM1bUo5UkJGVFY1Q0o4Y1ByZTYzaFlSQUMKSlV0dXlyTE5NeGorbTc0L2IwVGJPTnBOVnNWbTlUTUZTaGNKWW5nSnV3S0NBUUVBbGhqUFJnaTkyRmVUeEtZSAoyOEw2RTR4QWFVOEU5MUN2eFZMM3ljOGhGZlVITG9aOXZGQWZURWgxTU1KR2NvYTdLOEJzcFBnQU5NdExmL3M4CmpsL0txUEhaSmhMdkk1Zk5NY1VJRTVqWlBYR294cVJxWXhUZUpwYkxMSlh6TitMYmtuTHM0V1k0emgzK2tVK0YKOGVvNC9ub2NCZUJ5dmxEUUN5cjgxKzhnU1V2d1ZRd1BPUm9Nb0VDK081Z040SUZROUVSdHdVUmowelU0WDBpdQpnbDVwYlRGOW1XUzVEaFFZMFBCeGhSTWE4d3pVVEFzbThid2psK2VvZ2c4UEx0cW9lRnU4c2I3bDl3WldDRWlCCnlpSFFIbXhuM3FiQktnbitPbXhOZnNmK05LK084ZjFGKzFvOUp1MTZ1U3hRdjJiZ01qZzc5aEFIdE9XWngxUTkKQnZ0OGFRS0NBUUJaVkV0ZmQvUlVleVY2c2kwNjdHZkdqaGttNG5xTHRkejFUejBJSWpRUGw3MVQ4ZWRmckVPdQpTYzZZT0g2RStlSDZ2c3hKRzdMMkFUd1JvYmhzMFhzd0c1TzRRUnFzVCtzSXcwZWFjTWJ5Sm9ncitTTDRIT2o4CnNPTXhMSHZoeVU2bWNqc1FvSjVxeUhIKytScnhOSWJRMllFZlBoeHRwZjUzS01mdTlkRHRHaHZBeStlaEFGc2cKZVNjRWFLVUlqOXZOOXdmZ2tvRSszck44SE1ZZUtUVC9NbFdBTUdYR0IvdVc4UXhrZEpra2RZbVljYXFGWFQ1UQpmakRWTzZkWk5tdVVmZUxobzBMYUxQVmJMZ2UyY1pBRXEzMnZTYWp3VHNCK1V5Y2dTV3dMMHJvOHQ0R2EvTDdTCkVWSEl3c3dGRkNwazV4QmN3cklOL2pJaG9GdFY3ZVJ2QW9JQkFRQ1ljVjhyR042R2llUGM2VTNkcEZrMTNBQTEKUzNXaEM4OXZMMXJybnVBUTZIczNRb3BlbEpkcWE1dStQb1lpcEhUR0s1NURhMkgrSkJQUU9hUmJZQ25vY3RCbQptR2hVbkVHdmdKVkNDYVBhb0psU05hR083cmtjM1IyOXlqUzhBcTVyMTJ3MDQraUJIZU90YXRsNDJwYUUrZFRsCisxU3pQWE1hV3VPUTQrdTN6anRmRWxLOUw2b0Y5bkJzcVNXWHJ0TjNHTXFaakQzaExDeWI2c05OblFEUlhmS1YKdFJtL3dOUUtkWDFNQWxhNHZUSmxPYkNoWU5IdVMxaERrbkhrc20ybUhMZDNmNHRxWWlkN0F4UGo4clB2bmVWLwpqZkd6L1Vjc2hQdFZaTHB3bVVCMytSM3J5RE1xaXB5Sm9tU08zNVZzdGk2dm1nUCt3VjFvR0NGdlk1RWIKLS0tLS1FTkQgUlNBIFBSSVZBVEUgS0VZLS0tLS0K\n    token: c90p9j6hom9q1v1v3fuqf0dxvlbgmyz7gna9iqedq3uo2c6zyhdmw32gil650pylb5gybwxie0gv5mkemz6gulnnu9370vz17njakrodglm1y37ykkqaci5jcqgowa43\n",
+            "kubelet_identity": [
+              {
+                "client_id": "0dc3084f-bcf8-4380-bde7-0f1d89f5810b",
+                "object_id": "8a746496-7716-483d-b399-a506991ae8f9",
+                "user_assigned_identity_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/MC_jobhunt-dev-rg_jobhunt-aks_francecentral/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jobhunt-aks-agentpool"
+              }
+            ],
+            "kubernetes_version": "1.34",
+            "linux_profile": [],
+            "local_account_disabled": false,
+            "location": "francecentral",
+            "maintenance_window": [],
+            "maintenance_window_auto_upgrade": [],
+            "maintenance_window_node_os": [],
+            "microsoft_defender": [],
+            "monitor_metrics": [],
+            "name": "jobhunt-aks",
+            "network_profile": [
+              {
+                "dns_service_ip": "10.100.0.10",
+                "docker_bridge_cidr": "",
+                "ebpf_data_plane": "",
+                "ip_versions": [
+                  "IPv4"
+                ],
+                "load_balancer_profile": [
+                  {
+                    "effective_outbound_ips": [
+                      "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/MC_jobhunt-dev-rg_jobhunt-aks_francecentral/providers/Microsoft.Network/publicIPAddresses/73e2f505-125b-4c68-89c1-0dfa80b34ff6"
+                    ],
+                    "idle_timeout_in_minutes": 0,
+                    "managed_outbound_ip_count": 1,
+                    "managed_outbound_ipv6_count": 0,
+                    "outbound_ip_address_ids": [],
+                    "outbound_ip_prefix_ids": [],
+                    "outbound_ports_allocated": 0
+                  }
+                ],
+                "load_balancer_sku": "standard",
+                "nat_gateway_profile": [],
+                "network_data_plane": "azure",
+                "network_mode": "",
+                "network_plugin": "azure",
+                "network_plugin_mode": "",
+                "network_policy": "azure",
+                "outbound_ip_address_ids": [],
+                "outbound_ip_prefix_ids": [],
+                "outbound_type": "loadBalancer",
+                "pod_cidr": "",
+                "pod_cidrs": [],
+                "service_cidr": "10.100.0.0/16",
+                "service_cidrs": [
+                  "10.100.0.0/16"
+                ]
+              }
+            ],
+            "node_os_channel_upgrade": null,
+            "node_resource_group": "MC_jobhunt-dev-rg_jobhunt-aks_francecentral",
+            "node_resource_group_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/MC_jobhunt-dev-rg_jobhunt-aks_francecentral",
+            "oidc_issuer_enabled": true,
+            "oidc_issuer_url": "https://francecentral.oic.prod-aks.azure.com/604f1a96-cbe8-43f8-abbf-f8eaf5d85730/0a96211d-9a6b-4b07-9835-e4ef26fe7c18/",
+            "oms_agent": [
+              {
+                "log_analytics_workspace_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.OperationalInsights/workspaces/jobhunt-logs-3Bd4",
+                "msi_auth_for_monitoring_enabled": false,
+                "oms_agent_identity": [
+                  {
+                    "client_id": "3229c20d-0f2f-486e-be19-43213f0db3d6",
+                    "object_id": "0bdd13fb-f124-4d0e-9e93-e4041c266798",
+                    "user_assigned_identity_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourcegroups/MC_jobhunt-dev-rg_jobhunt-aks_francecentral/providers/Microsoft.ManagedIdentity/userAssignedIdentities/omsagent-jobhunt-aks"
+                  }
+                ]
+              }
+            ],
+            "open_service_mesh_enabled": false,
+            "portal_fqdn": "jobhunt-ecaqhy6d.portal.hcp.francecentral.azmk8s.io",
+            "private_cluster_enabled": false,
+            "private_cluster_public_fqdn_enabled": false,
+            "private_dns_zone_id": "",
+            "private_fqdn": "",
+            "public_network_access_enabled": true,
+            "resource_group_name": "jobhunt-dev-rg",
+            "role_based_access_control_enabled": true,
+            "run_command_enabled": true,
+            "service_mesh_profile": [],
+            "service_principal": [],
+            "sku_tier": "Free",
+            "storage_profile": [],
+            "support_plan": "KubernetesOfficial",
+            "tags": {
+              "CostCenter": "Education",
+              "CreatedBy": "Terraform",
+              "Environment": "Dev",
+              "Owner": "Jiheddridi",
+              "Project": "JobHunt",
+              "StartDate": "2025-01-15"
+            },
+            "timeouts": null,
+            "web_app_routing": [],
+            "windows_profile": [
+              {
+                "admin_password": "",
+                "admin_username": "azureuser",
+                "gmsa": [],
+                "license": ""
+              }
+            ],
+            "workload_autoscaler_profile": [],
+            "workload_identity_enabled": false
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "kube_admin_config"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "kube_admin_config_raw"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "kube_config"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "kube_config_raw"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "windows_profile"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": 0,
+                  "type": "number"
+                }
+              },
+              {
+                "type": "get_attr",
+                "value": "admin_password"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo1NDAwMDAwMDAwMDAwLCJkZWxldGUiOjU0MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjo1NDAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIyIn0=",
+          "dependencies": [
+            "azurerm_log_analytics_workspace.main",
+            "azurerm_resource_group.main",
+            "azurerm_subnet.aks",
+            "azurerm_user_assigned_identity.aks",
+            "azurerm_virtual_network.main",
+            "random_string.workspace_suffix"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_log_analytics_workspace",
+      "name": "main",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 3,
+          "attributes": {
+            "allow_resource_only_permissions": true,
+            "cmk_for_query_forced": false,
+            "daily_quota_gb": -1,
+            "data_collection_rule_id": "",
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.OperationalInsights/workspaces/jobhunt-logs-3Bd4",
+            "identity": [],
+            "immediate_data_purge_on_30_days_enabled": false,
+            "internet_ingestion_enabled": true,
+            "internet_query_enabled": true,
+            "local_authentication_disabled": false,
+            "location": "francecentral",
+            "name": "jobhunt-logs-3Bd4",
+            "primary_shared_key": "bRaFhJZ1UPYtPzDZuoq56HFwWAjShpY63oDg8YO2eei1sxj1pKVub/FcXJI86WT8BUFpSh/ZUruDQLkQeW9fVg==",
+            "reservation_capacity_in_gb_per_day": null,
+            "resource_group_name": "jobhunt-dev-rg",
+            "retention_in_days": 30,
+            "secondary_shared_key": "A9wJxrSkHwf59vTGFbkXKwpp8GuhMF6kw6nWa8/YHN0h2NfPGN1DvsgvWSB9vbybGFvK6FklslYKiypkS6wLSg==",
+            "sku": "PerGB2018",
+            "tags": {
+              "CostCenter": "Education",
+              "CreatedBy": "Terraform",
+              "Environment": "Dev",
+              "Owner": "Jiheddridi",
+              "Project": "JobHunt",
+              "StartDate": "2025-01-15"
+            },
+            "timeouts": null,
+            "workspace_id": "ee525e55-418b-4a74-9d53-b6b0cacb76e0"
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "primary_shared_key"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "secondary_shared_key"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIzIn0=",
+          "dependencies": [
+            "azurerm_resource_group.main",
+            "random_string.workspace_suffix"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_network_security_group",
+      "name": "aks",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Network/networkSecurityGroups/jobhunt-aks-nsg",
+            "location": "francecentral",
+            "name": "jobhunt-aks-nsg",
+            "resource_group_name": "jobhunt-dev-rg",
+            "security_rule": [
+              {
+                "access": "Allow",
+                "description": "",
+                "destination_address_prefix": "*",
+                "destination_address_prefixes": [],
+                "destination_application_security_group_ids": [],
+                "destination_port_range": "443",
+                "destination_port_ranges": [],
+                "direction": "Inbound",
+                "name": "AllowHTTPS",
+                "priority": 101,
+                "protocol": "Tcp",
+                "source_address_prefix": "*",
+                "source_address_prefixes": [],
+                "source_application_security_group_ids": [],
+                "source_port_range": "*",
+                "source_port_ranges": []
+              },
+              {
+                "access": "Allow",
+                "description": "",
+                "destination_address_prefix": "*",
+                "destination_address_prefixes": [],
+                "destination_application_security_group_ids": [],
+                "destination_port_range": "6443",
+                "destination_port_ranges": [],
+                "direction": "Inbound",
+                "name": "AllowKubernetesAPI",
+                "priority": 102,
+                "protocol": "Tcp",
+                "source_address_prefix": "10.0.0.0/16",
+                "source_address_prefixes": [],
+                "source_application_security_group_ids": [],
+                "source_port_range": "*",
+                "source_port_ranges": []
+              },
+              {
+                "access": "Allow",
+                "description": "",
+                "destination_address_prefix": "*",
+                "destination_address_prefixes": [],
+                "destination_application_security_group_ids": [],
+                "destination_port_range": "80",
+                "destination_port_ranges": [],
+                "direction": "Inbound",
+                "name": "AllowHTTP",
+                "priority": 100,
+                "protocol": "Tcp",
+                "source_address_prefix": "*",
+                "source_address_prefixes": [],
+                "source_application_security_group_ids": [],
+                "source_port_range": "*",
+                "source_port_ranges": []
+              }
+            ],
+            "tags": {
+              "CostCenter": "Education",
+              "CreatedBy": "Terraform",
+              "Environment": "Dev",
+              "Owner": "Jiheddridi",
+              "Project": "JobHunt",
+              "StartDate": "2025-01-15"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.main"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_postgresql_flexible_server_database",
+      "name": "jobs",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "charset": "UTF8",
+            "collation": "en_US.utf8",
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.DBforPostgreSQL/flexibleServers/jobhunt-db/databases/jobs",
+            "name": "jobs",
+            "server_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.DBforPostgreSQL/flexibleServers/jobhunt-db",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "azurerm_postgresql_flexible_server.main",
+            "azurerm_private_dns_zone.postgres",
+            "azurerm_private_dns_zone_virtual_network_link.postgres",
+            "azurerm_resource_group.main",
+            "azurerm_subnet.database",
+            "azurerm_virtual_network.main",
+            "random_password.postgres_password"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_private_dns_zone",
+      "name": "postgres",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Network/privateDnsZones/jobhunt.postgres.database.azure.com",
+            "max_number_of_record_sets": 25000,
+            "max_number_of_virtual_network_links": 1000,
+            "max_number_of_virtual_network_links_with_registration": 100,
+            "name": "jobhunt.postgres.database.azure.com",
+            "number_of_record_sets": 2,
+            "resource_group_name": "jobhunt-dev-rg",
+            "soa_record": [
+              {
+                "email": "azureprivatedns-host.microsoft.com",
+                "expire_time": 2419200,
+                "fqdn": "jobhunt.postgres.database.azure.com.",
+                "host_name": "azureprivatedns.net",
+                "minimum_ttl": 10,
+                "refresh_time": 3600,
+                "retry_time": 300,
+                "serial_number": 1,
+                "tags": {},
+                "ttl": 3600
+              }
+            ],
+            "tags": {
+              "CostCenter": "Education",
+              "CreatedBy": "Terraform",
+              "Environment": "Dev",
+              "Owner": "Jiheddridi",
+              "Project": "JobHunt",
+              "StartDate": "2025-01-15"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIwIn0=",
+          "dependencies": [
+            "azurerm_resource_group.main"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_private_dns_zone_virtual_network_link",
+      "name": "postgres",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Network/privateDnsZones/jobhunt.postgres.database.azure.com/virtualNetworkLinks/jobhunt-postgres-link",
+            "name": "jobhunt-postgres-link",
+            "private_dns_zone_name": "jobhunt.postgres.database.azure.com",
+            "registration_enabled": false,
+            "resource_group_name": "jobhunt-dev-rg",
+            "tags": {},
+            "timeouts": null,
+            "virtual_network_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Network/virtualNetworks/jobhunt-vnet"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_private_dns_zone.postgres",
+            "azurerm_resource_group.main",
+            "azurerm_virtual_network.main"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_resource_group",
+      "name": "main",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg",
+            "location": "francecentral",
+            "managed_by": "",
+            "name": "jobhunt-dev-rg",
+            "tags": {
+              "CostCenter": "Education",
+              "CreatedBy": "Terraform",
+              "Environment": "Dev",
+              "Name": "jobhunt-rg",
+              "Owner": "Jiheddridi",
+              "Project": "JobHunt",
+              "StartDate": "2025-01-15"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo1NDAwMDAwMDAwMDAwLCJkZWxldGUiOjU0MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjo1NDAwMDAwMDAwMDAwfX0="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_role_assignment",
+      "name": "aks_acr_pull",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "condition": "",
+            "condition_version": "",
+            "delegated_managed_identity_resource_id": "",
+            "description": "",
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.ContainerRegistry/registries/jobhuntacr/providers/Microsoft.Authorization/roleAssignments/b1bb673d-7938-dca4-1299-a21bd5bcb5b6",
+            "name": "b1bb673d-7938-dca4-1299-a21bd5bcb5b6",
+            "principal_id": "e413550a-7caf-4851-aac7-1018b8b0afc8",
+            "principal_type": "ServicePrincipal",
+            "role_definition_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/providers/Microsoft.Authorization/roleDefinitions/7f951dda-4ed3-4680-a7ca-43fe172d538d",
+            "role_definition_name": "AcrPull",
+            "scope": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.ContainerRegistry/registries/jobhuntacr",
+            "skip_service_principal_aad_check": null,
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "azurerm_container_registry.main",
+            "azurerm_resource_group.main",
+            "azurerm_user_assigned_identity.aks"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_subnet",
+      "name": "aks",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "address_prefixes": [
+              "10.0.1.0/24"
+            ],
+            "default_outbound_access_enabled": true,
+            "delegation": [],
+            "enforce_private_link_endpoint_network_policies": false,
+            "enforce_private_link_service_network_policies": false,
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Network/virtualNetworks/jobhunt-vnet/subnets/jobhunt-aks-subnet",
+            "name": "jobhunt-aks-subnet",
+            "private_endpoint_network_policies": "Enabled",
+            "private_endpoint_network_policies_enabled": true,
+            "private_link_service_network_policies_enabled": true,
+            "resource_group_name": "jobhunt-dev-rg",
+            "service_endpoint_policy_ids": [],
+            "service_endpoints": [],
+            "timeouts": null,
+            "virtual_network_name": "jobhunt-vnet"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.main",
+            "azurerm_virtual_network.main"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_subnet",
+      "name": "database",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "address_prefixes": [
+              "10.0.2.0/24"
+            ],
+            "default_outbound_access_enabled": true,
+            "delegation": [
+              {
+                "name": "fs",
+                "service_delegation": [
+                  {
+                    "actions": [
+                      "Microsoft.Network/virtualNetworks/subnets/join/action"
+                    ],
+                    "name": "Microsoft.DBforPostgreSQL/flexibleServers"
+                  }
+                ]
+              }
+            ],
+            "enforce_private_link_endpoint_network_policies": false,
+            "enforce_private_link_service_network_policies": false,
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Network/virtualNetworks/jobhunt-vnet/subnets/jobhunt-db-subnet",
+            "name": "jobhunt-db-subnet",
+            "private_endpoint_network_policies": "Enabled",
+            "private_endpoint_network_policies_enabled": true,
+            "private_link_service_network_policies_enabled": true,
+            "resource_group_name": "jobhunt-dev-rg",
+            "service_endpoint_policy_ids": [],
+            "service_endpoints": [],
+            "timeouts": null,
+            "virtual_network_name": "jobhunt-vnet"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.main",
+            "azurerm_virtual_network.main"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_subnet_network_security_group_association",
+      "name": "aks",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Network/virtualNetworks/jobhunt-vnet/subnets/jobhunt-aks-subnet",
+            "network_security_group_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Network/networkSecurityGroups/jobhunt-aks-nsg",
+            "subnet_id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Network/virtualNetworks/jobhunt-vnet/subnets/jobhunt-aks-subnet",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "azurerm_network_security_group.aks",
+            "azurerm_resource_group.main",
+            "azurerm_subnet.aks",
+            "azurerm_virtual_network.main"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_user_assigned_identity",
+      "name": "aks",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "client_id": "eda12631-7ff2-48ce-ba5a-54035b670210",
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jobhunt-aks-identity",
+            "location": "francecentral",
+            "name": "jobhunt-aks-identity",
+            "principal_id": "e413550a-7caf-4851-aac7-1018b8b0afc8",
+            "resource_group_name": "jobhunt-dev-rg",
+            "tags": {},
+            "tenant_id": "604f1a96-cbe8-43f8-abbf-f8eaf5d85730",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0=",
+          "dependencies": [
+            "azurerm_resource_group.main"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_virtual_network",
+      "name": "main",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "address_space": [
+              "10.0.0.0/16"
+            ],
+            "bgp_community": "",
+            "ddos_protection_plan": [],
+            "dns_servers": [],
+            "edge_zone": "",
+            "encryption": [],
+            "flow_timeout_in_minutes": 0,
+            "guid": "17c02e8b-7363-459b-94a5-9e45368ef1d1",
+            "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Network/virtualNetworks/jobhunt-vnet",
+            "location": "francecentral",
+            "name": "jobhunt-vnet",
+            "resource_group_name": "jobhunt-dev-rg",
+            "subnet": [
+              {
+                "address_prefix": "10.0.1.0/24",
+                "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Network/virtualNetworks/jobhunt-vnet/subnets/jobhunt-aks-subnet",
+                "name": "jobhunt-aks-subnet",
+                "security_group": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Network/networkSecurityGroups/jobhunt-aks-nsg"
+              },
+              {
+                "address_prefix": "10.0.2.0/24",
+                "id": "/subscriptions/3f18d2a9-b3b3-41fd-9201-3c2d4b085a53/resourceGroups/jobhunt-dev-rg/providers/Microsoft.Network/virtualNetworks/jobhunt-vnet/subnets/jobhunt-db-subnet",
+                "name": "jobhunt-db-subnet",
+                "security_group": ""
+              }
+            ],
+            "tags": {
+              "CostCenter": "Education",
+              "CreatedBy": "Terraform",
+              "Environment": "Dev",
+              "Owner": "Jiheddridi",
+              "Project": "JobHunt",
+              "StartDate": "2025-01-15"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.main"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "random_password",
+      "name": "postgres_password",
+      "provider": "provider[\"registry.terraform.io/hashicorp/random\"]",
+      "instances": [
+        {
+          "schema_version": 3,
+          "attributes": {
+            "bcrypt_hash": "$2a$10$KsTghFaBeMGIxumexsIsuOaPqxrQtR23GIOfSiCCCLCAxAdBXjeuy",
+            "id": "none",
+            "keepers": null,
+            "length": 32,
+            "lower": true,
+            "min_lower": 0,
+            "min_numeric": 0,
+            "min_special": 0,
+            "min_upper": 0,
+            "number": true,
+            "numeric": true,
+            "override_special": "!#$%\u0026*()-_=+[]{}\u003c\u003e:?",
+            "result": "#]vPZp[cAgcL\u003e}e(:G{qBQ=A26:Ad5dX",
+            "special": true,
+            "upper": true
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "bcrypt_hash"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "result"
+              }
+            ]
+          ],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "random_string",
+      "name": "kv_suffix",
+      "provider": "provider[\"registry.terraform.io/hashicorp/random\"]",
+      "instances": [
+        {
+          "schema_version": 2,
+          "attributes": {
+            "id": "EfId",
+            "keepers": null,
+            "length": 4,
+            "lower": true,
+            "min_lower": 0,
+            "min_numeric": 0,
+            "min_special": 0,
+            "min_upper": 0,
+            "number": true,
+            "numeric": true,
+            "override_special": null,
+            "result": "EfId",
+            "special": false,
+            "upper": true
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "random_string",
+      "name": "workspace_suffix",
+      "provider": "provider[\"registry.terraform.io/hashicorp/random\"]",
+      "instances": [
+        {
+          "schema_version": 2,
+          "attributes": {
+            "id": "3Bd4",
+            "keepers": null,
+            "length": 4,
+            "lower": true,
+            "min_lower": 0,
+            "min_numeric": 0,
+            "min_special": 0,
+            "min_upper": 0,
+            "number": true,
+            "numeric": true,
+            "override_special": null,
+            "result": "3Bd4",
+            "special": false,
+            "upper": true
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}
