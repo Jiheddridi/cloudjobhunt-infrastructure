@@ -31,3 +31,5 @@ __pycache__/
 *.pem
 *.key
 jenkins-credentials.txt
+.env
+*.env
