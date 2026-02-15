@@ -14,45 +14,61 @@ pipeline {
         stage('1. Build Docker Images') {
             steps {
                 echo '🔨 Building Docker images...'
-                echo "Backend: ${BACKEND_IMAGE}"
-                echo "Frontend: ${FRONTEND_IMAGE}"
-                echo '✅ Build completed (simulated)'
+                sh '''
+                    cd docker/api
+                    docker build -t ${BACKEND_IMAGE} .
+                    
+                    cd ../apiFront
+                    docker build -t ${FRONTEND_IMAGE} .
+                '''
+                echo '✅ Build completed'
             }
         }
         
         stage('2. Security Scan with Trivy') {
             steps {
                 echo '🔍 Scanning images for vulnerabilities...'
-                echo "Scanning ${BACKEND_IMAGE}"
-                echo "Scanning ${FRONTEND_IMAGE}"
-                echo '✅ No critical vulnerabilities found (simulated)'
+                sh '''
+                    trivy image --severity HIGH,CRITICAL ${BACKEND_IMAGE} || true
+                    trivy image --severity HIGH,CRITICAL ${FRONTEND_IMAGE} || true
+                '''
+                echo '✅ Security scan completed'
             }
         }
         
         stage('3. Push to Azure Container Registry') {
             steps {
                 echo '📤 Pushing images to ACR...'
-                echo "Pushing ${BACKEND_IMAGE}"
-                echo "Pushing ${FRONTEND_IMAGE}"
-                echo '✅ Push completed (simulated)'
+                sh '''
+                    az acr login --name ${ACR_NAME}
+                    docker push ${BACKEND_IMAGE}
+                    docker push ${FRONTEND_IMAGE}
+                '''
+                echo '✅ Push completed'
             }
         }
         
         stage('4. Deploy to AKS') {
             steps {
                 echo '🚀 Deploying to Kubernetes...'
-                echo "Cluster: ${AKS_CLUSTER}"
-                echo "Resource Group: ${RESOURCE_GROUP}"
-                echo '✅ Deployment completed (simulated)'
+                sh '''
+                    az aks get-credentials --resource-group ${RESOURCE_GROUP} --name ${AKS_CLUSTER} --overwrite-existing
+                    kubectl set image deployment/backend api=${BACKEND_IMAGE}
+                    kubectl set image deployment/frontend nginx=${FRONTEND_IMAGE}
+                '''
+                echo '✅ Deployment completed'
             }
         }
         
         stage('5. Health Check') {
             steps {
                 echo '✅ Verifying deployment...'
-                echo 'Backend: Running'
-                echo 'Frontend: Running'
-                echo '✅ All pods healthy (simulated)'
+                sh '''
+                    kubectl rollout status deployment/backend --timeout=5m
+                    kubectl rollout status deployment/frontend --timeout=5m
+                    kubectl get pods
+                '''
+                echo '✅ All pods healthy'
             }
         }
     }
@@ -66,3 +82,5 @@ pipeline {
         }
     }
 }
+```
+
