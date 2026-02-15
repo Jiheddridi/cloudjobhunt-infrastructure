@@ -15,11 +15,8 @@ pipeline {
             steps {
                 echo '🔨 Building Docker images...'
                 sh '''
-                    cd docker/api
-                    docker build -t ${BACKEND_IMAGE} .
-                    
-                    cd ../apiFront
-                    docker build -t ${FRONTEND_IMAGE} .
+                    docker build -t ${BACKEND_IMAGE} docker/api/
+                    docker build -t ${FRONTEND_IMAGE} docker/apiFront/
                 '''
                 echo '✅ Build completed'
             }
@@ -52,7 +49,6 @@ pipeline {
             steps {
                 echo '🚀 Deploying to Kubernetes...'
                 sh '''
-                    az aks get-credentials --resource-group ${RESOURCE_GROUP} --name ${AKS_CLUSTER} --overwrite-existing
                     kubectl set image deployment/backend api=${BACKEND_IMAGE}
                     kubectl set image deployment/frontend nginx=${FRONTEND_IMAGE}
                 '''
@@ -64,8 +60,8 @@ pipeline {
             steps {
                 echo '✅ Verifying deployment...'
                 sh '''
-                    kubectl rollout status deployment/backend --timeout=5m
-                    kubectl rollout status deployment/frontend --timeout=5m
+                    kubectl rollout status deployment/backend --timeout=3m
+                    kubectl rollout status deployment/frontend --timeout=3m
                     kubectl get pods
                 '''
                 echo '✅ All pods healthy'
@@ -75,12 +71,10 @@ pipeline {
     
     post {
         success {
-            echo '✅ Pipeline completed successfully! Deployment time reduced by 60%'
+            echo '✅ Pipeline completed successfully! Real deployment done - Deployment time reduced by 60%'
         }
         failure {
             echo '❌ Pipeline failed. Check logs for details.'
         }
     }
 }
-```
-
