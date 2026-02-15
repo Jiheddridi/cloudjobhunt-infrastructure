@@ -34,3 +34,43 @@ jenkins-credentials.txt
 .env
 *.env
 jobhunt/
+# Fichiers de configuration avec secrets
+monitoring/alertmanager-config.yaml
+monitoring/alertmanager-slack.yaml
+
+# Secrets Kubernetes (si vous en avez)
+**/secrets.yaml
+**/*-secret.yaml
+
+# Credentials
+*.env
+.env.local
+.env.production
+credentials.txt
+passwords.txt
+
+# Fichiers IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Terraform (si vous l'utilisez)
+terraform/.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# Temporary files
+tmp/
+temp/
+*.tmp

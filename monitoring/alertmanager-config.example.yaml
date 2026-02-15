@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: alertmanager-prometheus-kube-prometheus-alertmanager
+  namespace: monitoring
+type: Opaque
+stringData:
+  alertmanager.yaml: |
+    global:
+      resolve_timeout: 5m
+    
+    route:
+      group_by: ['alertname', 'namespace', 'pod']
+      group_wait: 10s
+      group_interval: 10s
+      repeat_interval: 12h
+      receiver: 'default-receiver'
+      routes:
+      - match:
+          severity: critical
+        receiver: 'critical-receiver'
+        continue: true
+      - match:
+          severity: warning
+        receiver: 'warning-receiver'
+    
+    receivers:
+    
+    - name: 'default-receiver'
+    
+    - name: 'critical-receiver'
+      email_configs:
+      - to: 'YOUR_ADMIN_EMAIL@example.com'
+        from: 'alertmanager@example.com'
+        smarthost: 'smtp.gmail.com:587'
+        auth_username: 'YOUR_GMAIL_ADDRESS@gmail.com'
+        auth_password: 'YOUR_GMAIL_APP_PASSWORD'
+        headers:
+          Subject: '🚨 ALERTE CRITIQUE Kubernetes: {{ .GroupLabels.alertname }}'
+        text: |
+          ========================================
+          ALERTE CRITIQUE KUBERNETES
+          ========================================
+          
+          Alerte: {{ .GroupLabels.alertname }}
+          Severité: {{ .CommonLabels.severity }}
+          Namespace: {{ .GroupLabels.namespace }}
+          Pod: {{ .GroupLabels.pod }}
+          
+          Description:
+          {{ range .Alerts }}
+          - {{ .Annotations.description }}
+          {{ end }}
+    
+    - name: 'warning-receiver'
+      email_configs:
+      - to: 'YOUR_TEAM_EMAIL@example.com'
+        from: 'alertmanager@example.com'
+        smarthost: 'smtp.gmail.com:587'
+        auth_username: 'YOUR_GMAIL_ADDRESS@gmail.com'
+        auth_password: 'YOUR_GMAIL_APP_PASSWORD'
+        headers:
+          Subject: '⚠️ WARNING Kubernetes: {{ .GroupLabels.alertname }}'
+        text: |
+          ========================================
+          ALERTE WARNING KUBERNETES
+          ========================================
+          
+          Alerte: {{ .GroupLabels.alertname }}
+          Namespace: {{ .GroupLabels.namespace }}
+          Pod: {{ .GroupLabels.pod }}
