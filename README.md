@@ -79,6 +79,30 @@ CloudJobHunt is a production-ready job aggregation platform demonstrating modern
               └──────────────────┘
 ```
 
+## 🔄 CI/CD Workflow
+```mermaid
+graph LR
+    A[👨‍💻 Developer] -->|git push| B[📦 GitHub]
+    B -->|Poll SCM| C[⚙️ Jenkins]
+    C -->|Stage 1| D[🐳 Build Docker]
+    C -->|Stage 2| E[🛡️ Trivy Scan]
+    C -->|Stage 3| F[☁️ Push to ACR]
+    C -->|Stage 4| G[☸️ Deploy to AKS]
+    C -->|Stage 5| H[✅ Health Check]
+    G --> I[🔵 Backend Pods]
+    G --> J[🟢 Frontend Pods]
+    I --> K[⚖️ Load Balancer]
+    J --> K
+    K --> L[🌍 Users]
+    
+    style C fill:#D24939
+    style D fill:#2496ED
+    style E fill:#00A9E0
+    style F fill:#0078D4
+    style G fill:#326CE5
+    style K fill:#4CAF50
+```
+
 ---
 
 ## ✨ Features
