@@ -8,7 +8,7 @@
 
 > Cloud-native job search platform aggregating opportunities from multiple sources across 9 countries, deployed on Azure Kubernetes Service with full CI/CD automation.
 
-**🌐 Live Demo:** http://20.74.48.197
+
 
 ---
 
